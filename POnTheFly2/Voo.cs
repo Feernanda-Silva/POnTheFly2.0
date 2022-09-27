@@ -8,5 +8,37 @@ namespace POnTheFly2
 {
     internal class Voo
     {
+        public string IdVoo { get; set; }
+        public char Situacao { get; set; }
+        public DateTime DataVoo { get; set; }
+        public DateTime DataCadastro { get; set; }
+        public string Destino { get; set; }
+        public int AssentosOcupados { get; set; }
+        public Aeronave Inscricao { get; set; }
+
+        public Voo()
+        {
+
+        }
+
+        public void CadastrarVoo()
+        {
+
+        }
+
+        public void LocalizarVoo()
+        {
+
+        }
+
+        public void EditarVoo()
+        {
+
+        }
+
+        public void ImprimirVoo()
+        {
+
+        }
     }
 }

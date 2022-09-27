@@ -8,5 +8,28 @@ namespace POnTheFly2
 {
     internal class Restritos
     {
+
+        public string Cpf { get; set; }
+
+        public Restritos()
+        {
+
+        }
+        public void CadastrarRestrito()
+        {
+
+        }
+
+        public void LocalizarRestrito()
+        {
+
+        }
+
+        public void RetirarRestrito()
+        { 
+
+        }
+
+
     }
 }

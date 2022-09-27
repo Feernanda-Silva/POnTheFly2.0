@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.SqlClient;
 
 namespace POnTheFly2
 {
@@ -6,6 +7,20 @@ namespace POnTheFly2
     {
         static void Main(string[] args)
         {
+            ConexaoBanco  conexao = new ConexaoBanco();
+            SqlConnection sqlConnection = conexao.ConectarBanco();
+
+
+            Passageiro passageiro = new Passageiro();
+            Restritos restrito = new Restritos();
+            CompanhiaAerea companhiaAerea = new CompanhiaAerea();
+            Bloqueado bloqueado = new Bloqueado();  
+            Voo voo = new Voo();
+            Aeronave aeronave = new Aeronave();
+            Passagem passagem = new Passagem(); 
+            Venda venda = new Venda();
+            ItemVenda itemVenda = new ItemVenda();  
+
             MenuInicial();
 
             void MenuInicial()
@@ -93,16 +108,16 @@ namespace POnTheFly2
 
                     switch (opPassageiro)
                     {
-                        case 1: //CadastrarPassageiro();
+                        case 1: passageiro.CadastrarPassageiro();
                             break;
-                        case 2: //LocalizarPassageiro();
+                        case 2: passageiro.LocalizarPassageiro();
                             break;
-                        case 3: //EditarPassageiro();
+                        case 3: passageiro.EditarPassageiro();
                             break;
                         case 4:
                             MenuRestritos();
                             break;
-                        case 5: //ImpressãoPassageiro
+                        case 5: passageiro.ImprimirPassageiro();
                             break;
                         case 6:
                             MenuInicial();
@@ -127,11 +142,11 @@ namespace POnTheFly2
 
                     switch (opRestritos)
                     {
-                        case 1: //CadastrarRestritos();
+                        case 1: restrito.CadastrarRestrito();
                             break;
-                        case 2: //LocalizarRestritos();
+                        case 2: restrito.LocalizarRestrito();
                             break;
-                        case 3: //RetirarRestritos();
+                        case 3: restrito.RetirarRestrito();
                             break;
                         case 4:
                             MenuPassageiro();
@@ -165,13 +180,13 @@ namespace POnTheFly2
 
                     switch (opCia)
                     {
-                        case 1: //CadastrarCiaAerea();
+                        case 1: companhiaAerea.CadastrarCia();
                             break;
-                        case 2: //LocalizarCiaAerea();
+                        case 2: companhiaAerea.LocalizarCia();
                             break;
-                        case 3: //EditarCiaAerea();
+                        case 3: companhiaAerea.EditarCia();
                             break;
-                        case 4: //ImpressaoCiaAerea();
+                        case 4: companhiaAerea.ImprimirCia();
                             break;
                         case 5:
                             MenuBloqueadas();
@@ -200,11 +215,11 @@ namespace POnTheFly2
 
                     switch (opBloq)
                     {
-                        case 1: //CadastrarBloqueadas();
+                        case 1: bloqueado.CadastrarBloqueado();
                             break;
-                        case 2: //LocalizarBloqueadas();
+                        case 2: bloqueado.LocalizarBloqueado();
                             break;
-                        case 3: //RetirarBloqueadas();
+                        case 3: bloqueado.RetirarBloqueado();
                             break;
                         case 4:
                             MenuPassageiro();
@@ -234,13 +249,13 @@ namespace POnTheFly2
 
                     switch (opVoo)
                     {
-                        case 1: //CadastrarVoo();
+                        case 1: voo.CadastrarVoo();
                             break;
-                        case 2: //LocalizarVoo();
+                        case 2: voo.LocalizarVoo();
                             break;
-                        case 3: //EditarVoo();
+                        case 3: voo.EditarVoo();
                             break;
-                        case 4: //ImpressaoVoo();
+                        case 4: voo.ImprimirVoo();
                             break;
                         case 5:
                             MenuInicial();
@@ -267,13 +282,13 @@ namespace POnTheFly2
 
                     switch (opAeronave)
                     {
-                        case 1: //CadastrarAeronave();
+                        case 1: aeronave.CadastrarAeronave();
                             break;
-                        case 2: //LocalizarAeronave();
+                        case 2: aeronave.LocalizarAeronave();
                             break;
-                        case 3: //EditarAeronave();
+                        case 3: aeronave.EditarAeronave();
                             break;
-                        case 4: //ImpressaoAeronave();
+                        case 4: aeronave.ImprimirAeronave();
                             break;
                         case 5:
                             MenuInicial();
@@ -301,13 +316,13 @@ namespace POnTheFly2
 
                     switch (opPassagem)
                     {
-                        case 1: //CadastrarPassagem();
+                        case 1: passagem.CadastrarPassagem();
                             break;
-                        case 2: //LocalizarPassagem();
+                        case 2: passagem.LocalizarPassagem();
                             break;
-                        case 3: //EditarPassagem();
+                        case 3: passagem.EditarPassagem();
                             break;
-                        case 4: //ImpressaoPassagem();
+                        case 4: passagem.ImprimirPassagem();
                             break;
                         case 5:
                             MenuInicial();
@@ -337,13 +352,13 @@ namespace POnTheFly2
 
                     switch (opVenda)
                     {
-                        case 1: //CadastrarVenda();
+                        case 1: venda.CadastrarVenda();
                             break;
-                        case 2: //LocalizarVenda();
+                        case 2: venda.LocalizarVenda();
                             break;
-                        case 3: //CancelarVenda();
+                        case 3: venda.CancelarVenda();
                             break;
-                        case 4: //ImpressaoVenda();
+                        case 4: venda.ImprimirVenda();
                             break;
                         case 5:
                             MenuItemVenda();
@@ -370,11 +385,11 @@ namespace POnTheFly2
 
                     switch (opItemVenda)
                     {
-                        case 1: //CadastrarItemVenda();
+                        case 1: itemVenda.CadastrarItemVenda();
                             break;
-                        case 2: //LocalizarItemVenda();
+                        case 2: itemVenda.LocalizarItemVenda();
                             break;
-                        case 3: //EditarItemVenda(); 
+                        case 3: itemVenda.EditarItemVenda(); 
                             break;
                         case 4:
                             MenuVenda();

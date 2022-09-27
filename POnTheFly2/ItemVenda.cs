@@ -8,5 +8,24 @@ namespace POnTheFly2
 {
     internal class ItemVenda
     {
+        public string IdItemVenda { get; set; }
+        public float ValorUnitario { get; set; }
+        public Passagem IdPassagem { get; set; }
+
+        public void CadastrarItemVenda()
+        {
+
+        }
+
+        public void LocalizarItemVenda()
+        {
+
+        }
+
+        public void EditarItemVenda()
+        {
+
+        }
+
     }
 }
