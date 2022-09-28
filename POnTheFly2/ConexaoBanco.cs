@@ -71,7 +71,7 @@ namespace POnTheFly2
 
 
         public void AtualizarPessoa(SqlConnection sqlConnection, string cpf, int op)
-        {   
+        {
 
             if (op == 1)
             {
@@ -88,7 +88,7 @@ namespace POnTheFly2
 
                 Console.WriteLine("Edição efetuada com sucesso!");
             }
-           
+
             else if (op == 2)
             {
                 Console.WriteLine("Data de Nascimento: ");
@@ -178,15 +178,30 @@ namespace POnTheFly2
 
             cmd.CommandText = "INSERT INTO Restritos (Cpf) VALUES(@CPF);";
             cmd.Parameters.AddWithValue("@Cpf", System.Data.SqlDbType.VarChar).Value = cpf;
-            
+
             cmd.Connection = sqlConnection;
             cmd.ExecuteNonQuery();
         }
-    
 
-        public void ConsultarRestrito()
+
+        public void ConsultarRestrito(SqlConnection sqlConnection, string cpf)
         {
+            SqlCommand cmd = new SqlCommand();
 
+            cmd.CommandText = "SELECT Cpf From Restritos WHERE Restritos.Cpf = @Cpf;";
+            cmd.Parameters.AddWithValue("@Cpf", System.Data.SqlDbType.VarChar).Value = cpf;
+
+            cmd.Connection = sqlConnection;
+            cmd.ExecuteNonQuery();
+
+
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    Console.WriteLine("Cpf Restrito pela PF: {0}", reader.GetString(0));
+                }
+            }
         }
 
         public void DeletarRestrito()
@@ -223,7 +238,7 @@ namespace POnTheFly2
             }
             return possuiCpfCadastrado;
         }
-    
+
 
 
         public bool ExistirCpf(SqlConnection sqlConnection, string cpf) //Se já existe no banco 

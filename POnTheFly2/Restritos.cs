@@ -40,10 +40,20 @@ namespace POnTheFly2
 
         }
 
-        public void LocalizarRestrito()
+        public void LocalizarRestrito(SqlConnection sqlConnection, ConexaoBanco conexaoBanco)
         {
             Console.WriteLine("Digite o Cpf: ");
             this.Cpf = Console.ReadLine();
+
+            if (conexaoBanco.ExistirRestrito(sqlConnection, Cpf) == false)
+            {
+                Console.WriteLine("CPF não localizado!");
+            }
+
+            else if (conexaoBanco.ExistirRestrito(sqlConnection, Cpf) == true)
+            {
+                conexaoBanco.ConsultarRestrito(sqlConnection, Cpf);
+            }
         }
 
         public void RetirarRestrito()

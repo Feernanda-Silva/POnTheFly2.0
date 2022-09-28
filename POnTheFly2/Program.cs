@@ -143,7 +143,7 @@ namespace POnTheFly2
                     {
                         case 1: restrito.CadastrarRestrito(sqlConnection, conexaoBanco, passageiro);
                             break;
-                        case 2: restrito.LocalizarRestrito();
+                        case 2: restrito.LocalizarRestrito(sqlConnection, conexaoBanco);
                             break;
                         case 3: restrito.RetirarRestrito();
                             break;
