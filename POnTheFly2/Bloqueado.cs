@@ -54,9 +54,20 @@ namespace POnTheFly2
             }
         }
 
-        public void RetirarBloqueado()
+        public void RetirarBloqueado(SqlConnection sqlConnection, ConexaoBanco conexaoBanco)
         {
+            Console.WriteLine("Digite o Cnpj: ");
+            this.Cnpj = Console.ReadLine();
 
+            if (conexaoBanco.ExistirBloqueado(sqlConnection, this.Cnpj) == false)
+            {
+                Console.WriteLine("Cnpj não localizado!");
+            }
+
+            else if (conexaoBanco.ExistirBloqueado(sqlConnection, this.Cnpj) == true)
+            {
+                conexaoBanco.DeletarBloqueado(sqlConnection, Cnpj);
+            }
         }
     }
 }

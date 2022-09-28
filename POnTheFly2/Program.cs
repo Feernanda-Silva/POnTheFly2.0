@@ -218,7 +218,7 @@ namespace POnTheFly2
                             break;
                         case 2: bloqueado.LocalizarBloqueado(sqlConnection, conexaoBanco);
                             break;
-                        case 3: bloqueado.RetirarBloqueado();
+                        case 3: bloqueado.RetirarBloqueado(sqlConnection, conexaoBanco);
                             break;
                         case 4:
                             MenuPassageiro();

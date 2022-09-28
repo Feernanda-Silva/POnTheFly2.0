@@ -450,9 +450,17 @@ namespace POnTheFly2
             }
         }
 
-        public void DeletarBloqueado()
+        public void DeletarBloqueado(SqlConnection sqlConnection, string cnpj)
         {
+            SqlCommand cmd = new SqlCommand();
 
+            cmd.CommandText = "DELETE FROM Bloqueados WHERE Cnpj = @Cnpj";
+            cmd.Parameters.AddWithValue("@Cnpj", System.Data.SqlDbType.VarChar).Value = cnpj;
+
+            cmd.Connection = sqlConnection;
+            cmd.ExecuteNonQuery();
+
+            Console.WriteLine("Remoção efetuada com sucesso!");
         }
 
         public bool ExistirBloqueado(SqlConnection sqlConnection, string cnpj)
