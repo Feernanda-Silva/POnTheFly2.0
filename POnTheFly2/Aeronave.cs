@@ -59,6 +59,13 @@ namespace POnTheFly2
             this.Inscricao = Console.ReadLine()+"-"+ GeraNumero();
             Console.WriteLine("Inscrição: "+this.Inscricao);
 
+            while (conexaoBanco.ExistirAeronave(sqlConnection, this.Inscricao) == true)
+            {
+                Console.WriteLine("Inscrição de Aeronave já cadastrada, faça o cadastro com outra Inscricao");
+                Console.WriteLine("Inscrição: ");
+                this.Inscricao= Console.ReadLine();
+            }
+
             Console.Write("Capacidade: ");
             this.Capacidade = int.Parse(Console.ReadLine());
             if (this.Capacidade < 100 || this.Capacidade > 999)

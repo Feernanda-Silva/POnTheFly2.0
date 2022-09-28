@@ -570,6 +570,39 @@ namespace POnTheFly2
             }
             return possuiIdVooCadastrado;
         }
+        public void InserirDestino(SqlConnection sqlConnection, string sigla, string nome)
+        {
+
+        }
+        public bool ExistirDestino(SqlConnection sqlConnection, string destino)
+        {
+            SqlCommand cmd = new SqlCommand();
+
+            cmd.CommandText = "SELECT Voo.Destino FROM Voo WHERE Voo.Destino= @Destino";
+            cmd.Parameters.AddWithValue("@Sigla", System.Data.SqlDbType.VarChar).Value = destino; 
+
+            cmd.Connection = sqlConnection;
+            cmd.ExecuteNonQuery();
+
+            bool possuiSiglaCadastrada = false;
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+
+                while (reader.Read())
+                {
+                    if (reader.IsDBNull(0))
+                    {
+                        possuiSiglaCadastrada = false;
+                    }
+
+                    else
+                    {
+                        possuiSiglaCadastrada = true;
+                    }
+                }
+            }
+            return possuiSiglaCadastrada;
+        }
 
         //Para Aeronave
 
