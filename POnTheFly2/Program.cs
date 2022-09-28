@@ -281,9 +281,9 @@ namespace POnTheFly2
 
                     switch (opAeronave)
                     {
-                        case 1: aeronave.CadastrarAeronave();
+                        case 1: aeronave.CadastrarAeronave(conexaoBanco, sqlConnection);
                             break;
-                        case 2: aeronave.LocalizarAeronave();
+                        case 2: aeronave.LocalizarAeronave(conexaoBanco, sqlConnection);
                             break;
                         case 3: aeronave.EditarAeronave();
                             break;

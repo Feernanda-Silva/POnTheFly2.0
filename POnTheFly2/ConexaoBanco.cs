@@ -486,21 +486,82 @@ namespace POnTheFly2
 
         }
 
-        public void ExistirVoo()
+        public bool ExistirVoo(SqlConnection sqlConnection, string idVoo)
         {
+            SqlCommand cmd = new SqlCommand();
 
+            cmd.CommandText = "SELECT IdVoo FROM Voo WHERE IdVoo= @IdVoo";
+            cmd.Parameters.AddWithValue("@IdVoo", System.Data.SqlDbType.VarChar).Value = idVoo;
+
+            cmd.Connection = sqlConnection;
+            cmd.ExecuteNonQuery();
+
+            bool possuiIdVooCadastrado = false;
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+
+                while (reader.Read())
+                {
+                    if (reader.IsDBNull(0))
+                    {
+                        possuiIdVooCadastrado = false;
+                    }
+
+                    else
+                    {
+                        possuiIdVooCadastrado = true;
+                    }
+                }
+            }
+            return possuiIdVooCadastrado;
         }
 
         //Para Aeronave
 
-        public void InserirAeronave()
+        public void InserirAeronave(string cnpj, string inscricao, int capacidade, DateTime ultimaVenda,
+                DateTime dataCadastro, char situacao, SqlConnection sqlConnection)
         {
+            SqlCommand cmd = new SqlCommand();
 
+            cmd.CommandText = "INSERT INTO Aeronave (Cnpj,Inscricao,Capacidade, UltimaVenda,DataCadastro,Situacao) VALUES (@Cnpj, @Inscricao, @Capacidade,@UltimaVenda,@DataCadastro, @Situacao);";
+            cmd.Parameters.AddWithValue("@Cnpj", System.Data.SqlDbType.VarChar).Value = cnpj;
+            cmd.Parameters.AddWithValue("@Inscricao", System.Data.SqlDbType.Char).Value = inscricao;
+            cmd.Parameters.AddWithValue("@Capacidade", System.Data.SqlDbType.Char).Value = capacidade;
+            cmd.Parameters.AddWithValue("@UltimaVenda", System.Data.SqlDbType.DateTime).Value = ultimaVenda;
+            cmd.Parameters.AddWithValue("@DataCadastro", System.Data.SqlDbType.DateTime).Value = dataCadastro;
+            cmd.Parameters.AddWithValue("@Situacao", System.Data.SqlDbType.DateTime).Value = situacao;
+
+            cmd.Connection = sqlConnection;
+            cmd.ExecuteNonQuery();
+
+            Console.WriteLine("Cadastro efetuado com sucesso!");
         }
 
-        public void ConsultarAeronave()
+        public void ConsultarAeronave(SqlConnection sqlConnection, string inscricao)
         {
 
+            SqlCommand cmd = new SqlCommand();
+
+            cmd.CommandText = "SELECT Aeronave.Inscricao,Aeronave.Capacidade,Aeronave.UltimaVenda,Aeronave.Situacao,Aeronave.DataCadastro,Aeronave.Cnpj FROM Aeronave WHERE Aeronave.Inscricao = @Inscricao;";
+            cmd.Parameters.AddWithValue("@Inscricao", System.Data.SqlDbType.VarChar).Value = inscricao;
+
+            cmd.Connection = sqlConnection;
+            cmd.ExecuteNonQuery();
+
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    Console.WriteLine("Inscricao: {0}", reader.GetString(0));
+                    Console.WriteLine("Capacidade: {0}", reader.GetInt32(1));
+                    Console.WriteLine("Ultima Venda: {0}", reader.GetDateTime(2));
+                    Console.WriteLine("Situação: {0}", reader.GetString(3));
+                    Console.WriteLine("Data Cadastro: {0}", reader.GetDateTime(4));
+                    Console.WriteLine("Cnpj: {0}", reader.GetString(5));
+
+
+                }
+            }
         }
 
         public void AtualizarAeronave()
@@ -508,9 +569,34 @@ namespace POnTheFly2
 
         }
 
-        public void ExistirAeronave()
+        public bool ExistirAeronave(SqlConnection sqlConnection, string inscricao)
         {
+            SqlCommand cmd = new SqlCommand();
 
+            cmd.CommandText = "SELECT Inscricao FROM Aeronave WHERE Inscricao= @Inscricao";
+            cmd.Parameters.AddWithValue("@Inscricao", System.Data.SqlDbType.VarChar).Value = inscricao;
+
+            cmd.Connection = sqlConnection;
+            cmd.ExecuteNonQuery();
+
+            bool possuiIdVooCadastrado = false;
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+
+                while (reader.Read())
+                {
+                    if (reader.IsDBNull(0))
+                    {
+                        possuiIdVooCadastrado = false;
+                    }
+
+                    else
+                    {
+                        possuiIdVooCadastrado = true;
+                    }
+                }
+            }
+            return possuiIdVooCadastrado;
 
         }
 
