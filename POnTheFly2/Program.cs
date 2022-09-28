@@ -145,7 +145,7 @@ namespace POnTheFly2
                             break;
                         case 2: restrito.LocalizarRestrito(sqlConnection, conexaoBanco);
                             break;
-                        case 3: restrito.RetirarRestrito();
+                        case 3: restrito.RetirarRestrito(sqlConnection, conexaoBanco);
                             break;
                         case 4:
                             MenuPassageiro();

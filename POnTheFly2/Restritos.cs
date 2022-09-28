@@ -47,7 +47,7 @@ namespace POnTheFly2
 
             if (conexaoBanco.ExistirRestrito(sqlConnection, Cpf) == false)
             {
-                Console.WriteLine("CPF não localizado!");
+                Console.WriteLine("Não há nenhuma restrição desse CPF na Polícia Federal!");
             }
 
             else if (conexaoBanco.ExistirRestrito(sqlConnection, Cpf) == true)
@@ -56,9 +56,20 @@ namespace POnTheFly2
             }
         }
 
-        public void RetirarRestrito()
-        { 
+        public void RetirarRestrito( SqlConnection sqlConnection, ConexaoBanco conexaoBanco)
+        {
+            Console.WriteLine("Digite o Cpf: ");
+            this.Cpf = Console.ReadLine();
 
+            if (conexaoBanco.ExistirRestrito(sqlConnection, Cpf) == false)
+            {
+                Console.WriteLine("CPF não localizado!");
+            }
+
+            else if (conexaoBanco.ExistirRestrito(sqlConnection, Cpf) == true)
+            {
+                conexaoBanco.DeletarRestrito(sqlConnection, Cpf);
+            }
         }
 
 

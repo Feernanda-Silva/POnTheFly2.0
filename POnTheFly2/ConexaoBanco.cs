@@ -204,9 +204,15 @@ namespace POnTheFly2
             }
         }
 
-        public void DeletarRestrito()
+        public void DeletarRestrito(SqlConnection sqlConnection, string cpf)
         {
+            SqlCommand cmd = new SqlCommand();
 
+            cmd.CommandText = "DELETE FROM Restritos WHERE Cpf = @CPF";
+            cmd.Parameters.AddWithValue("@CPF", System.Data.SqlDbType.VarChar).Value = cpf;
+
+            cmd.Connection = sqlConnection;
+            cmd.ExecuteNonQuery();
         }
 
         public bool ExistirRestrito(SqlConnection sqlConnection, string cpf)
