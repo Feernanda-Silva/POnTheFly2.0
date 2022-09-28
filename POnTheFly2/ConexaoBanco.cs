@@ -40,6 +40,8 @@ namespace POnTheFly2
 
             cmd.Connection = sqlConnection;
             cmd.ExecuteNonQuery();
+
+            Console.WriteLine("Cadastro efetuado com sucesso!");
         }
 
         public void ConsultarPessoa(SqlConnection sqlConnection, string cpf)
@@ -181,6 +183,8 @@ namespace POnTheFly2
 
             cmd.Connection = sqlConnection;
             cmd.ExecuteNonQuery();
+
+            Console.WriteLine("Cadastro efetuado com sucesso!");
         }
 
 
@@ -213,6 +217,8 @@ namespace POnTheFly2
 
             cmd.Connection = sqlConnection;
             cmd.ExecuteNonQuery();
+
+            Console.WriteLine("Remoção efetuada com sucesso!");
         }
 
         public bool ExistirRestrito(SqlConnection sqlConnection, string cpf)
@@ -287,24 +293,127 @@ namespace POnTheFly2
             cmd.CommandText = "INSERT INTO Companhia_Aerea (Cnpj, RazaoSocial, DataAbertura, DataCadastro, UltimoVoo, Situacao)" +
                 " VALUES(@Cnpj, @RazaoSocial, @DataAbertura,@DataCadastro,@UltimoVoo, @Situacao);";
             cmd.Parameters.AddWithValue("@Cnpj", System.Data.SqlDbType.VarChar).Value = cnpj;
-            cmd.Parameters.AddWithValue("@RazaoSocial", System.Data.SqlDbType.Char).Value = razaoSocial;
-            cmd.Parameters.AddWithValue("@DataAbertura", System.Data.SqlDbType.Char).Value = dataAbertura;
+            cmd.Parameters.AddWithValue("@RazaoSocial", System.Data.SqlDbType.VarChar).Value = razaoSocial;
+            cmd.Parameters.AddWithValue("@DataAbertura", System.Data.SqlDbType.DateTime).Value = dataAbertura;
             cmd.Parameters.AddWithValue("@DataCadastro", System.Data.SqlDbType.DateTime).Value = dataCadastro;
             cmd.Parameters.AddWithValue("@UltimoVoo", System.Data.SqlDbType.DateTime).Value = ultimoVoo;
-            cmd.Parameters.AddWithValue("@Situacao", System.Data.SqlDbType.DateTime).Value = situacao;
+            cmd.Parameters.AddWithValue("@Situacao", System.Data.SqlDbType.Char).Value = situacao;
             
             cmd.Connection = sqlConnection;
             cmd.ExecuteNonQuery();
+
+            Console.WriteLine("Cadastro efetuado com sucesso!");
         }
 
-        public void ConsultarCia()
+        public void ConsultarCia(SqlConnection sqlConnection, string cnpj)
         {
 
+            SqlCommand cmd = new SqlCommand();
+
+            cmd.CommandText = "SELECT Companhia_Aerea.Cnpj,Companhia_Aerea.RazaoSocial,Companhia_Aerea.DataAbertura,Companhia_Aerea.DataCadastro,Companhia_Aerea.UltimoVoo,Companhia_Aerea.Situacao FROM Companhia_Aerea WHERE Companhia_Aerea.Cnpj = @Cnpj;";
+            cmd.Parameters.AddWithValue("@Cnpj", System.Data.SqlDbType.VarChar).Value = cnpj;
+
+            cmd.Connection = sqlConnection;
+            cmd.ExecuteNonQuery();
+
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    Console.WriteLine("Cnpj: {0}", reader.GetString(0));
+                    Console.WriteLine("Razao Social: {0}", reader.GetString(1));
+                    Console.WriteLine("DataAbertura: {0}", reader.GetDateTime(2));
+                    Console.WriteLine("Data Cadastro: {0}", reader.GetDateTime(3));
+                    Console.WriteLine("Ultima Voo: {0}", reader.GetDateTime(4));
+                    Console.WriteLine("Situação: {0}", reader.GetString(5));
+                    
+
+                }
+            }
         }
 
-        public void AtualizarCia()
+        public void AtualizarCia(SqlConnection sqlConnection, string cnpj, int op)
         {
+            if (op == 1)
+            {
+                Console.WriteLine("Razão Social: ");
+                string razaoSocial = Console.ReadLine();
 
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandText = "UPDATE Companhia_Aerea SET RazaoSocial= @RazaoSocial WHERE Cnpj= @Cnpj;";
+                cmd.Parameters.AddWithValue("@Cnpj", System.Data.SqlDbType.VarChar).Value = cnpj;
+                cmd.Parameters.AddWithValue("@RazaoSocial", System.Data.SqlDbType.VarChar).Value = razaoSocial;
+
+                cmd.Connection = sqlConnection;
+                cmd.ExecuteNonQuery();
+
+                Console.WriteLine("Edição efetuada com sucesso!");
+            }
+
+            else if (op == 2)
+            {
+                Console.WriteLine("Data de Abertura: ");
+                DateTime dataAbertura = DateTime.Parse(Console.ReadLine());
+
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandText = "UPDATE Companhia_Aerea SET DataAbertura= @DataAbertura WHERE Cnpj= @Cnpj;";
+                cmd.Parameters.AddWithValue("@Cnpj", System.Data.SqlDbType.DateTime).Value = cnpj;
+                cmd.Parameters.AddWithValue("@DataAbertura", System.Data.SqlDbType.DateTime).Value = dataAbertura;
+
+                cmd.Connection = sqlConnection;
+                cmd.ExecuteNonQuery();
+
+                Console.WriteLine("Edição efetuada com sucesso!");
+            }
+
+            else if (op == 3)
+            {
+                Console.WriteLine("Data Cadastro: ");
+                DateTime dataCadastro= DateTime.Parse(Console.ReadLine()); ;
+
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandText = "UPDATE Companhia_Aerea SET DataCadastro= @DataCadastro WHERE Cnpj= @Cnpj;";
+                cmd.Parameters.AddWithValue("@Cnpj", System.Data.SqlDbType.DateTime).Value = cnpj;
+                cmd.Parameters.AddWithValue("@DataCadastro", System.Data.SqlDbType.DateTime).Value = dataCadastro;
+                cmd.Connection = sqlConnection;
+                cmd.ExecuteNonQuery();
+
+                Console.WriteLine("Edição efetuada com sucesso!");
+            }
+
+            else if (op == 4)
+            {
+                Console.WriteLine("Data Ultimo Voo: ");
+                DateTime ultimoVoo = DateTime.Parse(Console.ReadLine());
+
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandText = "UPDATE Companhia_Aerea SET UltimoVoo= @UltimoVoo WHERE Cnpj= @Cnpj;";
+                cmd.Parameters.AddWithValue("@Cnpj", System.Data.SqlDbType.VarChar).Value = cnpj;
+                cmd.Parameters.AddWithValue("@UltimoVoo", System.Data.SqlDbType.DateTime).Value = ultimoVoo;
+
+                cmd.Connection = sqlConnection;
+                cmd.ExecuteNonQuery();
+
+                Console.WriteLine("Edição efetuada com sucesso!");
+            }
+
+            else if (op == 5)
+            {
+                Console.WriteLine("Situação: ");
+                char situacao = Char.Parse(Console.ReadLine());
+
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandText = "UPDATE Companhia_Aerea SET Situacao= @Situacao WHERE Cnpj= @Cnpj;";
+                cmd.Parameters.AddWithValue("@Cnpj", System.Data.SqlDbType.VarChar).Value = cnpj;
+                cmd.Parameters.AddWithValue("@Situacao", System.Data.SqlDbType.Char).Value = situacao;
+
+                cmd.Connection = sqlConnection;
+                cmd.ExecuteNonQuery();
+
+                Console.WriteLine("Edição efetuada com sucesso!");
+            }
+
+           
         }
 
         //Para Companhia Aerea Bloqueadas

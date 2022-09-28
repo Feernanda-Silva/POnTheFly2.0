@@ -181,9 +181,9 @@ namespace POnTheFly2
                     {
                         case 1: companhiaAerea.CadastrarCia(conexaoBanco, sqlConnection);
                             break;
-                        case 2: companhiaAerea.LocalizarCia();
+                        case 2: companhiaAerea.LocalizarCia(conexaoBanco, sqlConnection);
                             break;
-                        case 3: companhiaAerea.EditarCia();
+                        case 3: companhiaAerea.EditarCia(conexaoBanco, sqlConnection);
                             break;
                         case 4: companhiaAerea.ImprimirCia();
                             break;

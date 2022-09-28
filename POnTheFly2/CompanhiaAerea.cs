@@ -80,14 +80,47 @@ namespace POnTheFly2
         }
     
 
-        public void LocalizarCia()
+        public void LocalizarCia( ConexaoBanco conexaoBanco, SqlConnection sqlConnection)
         {
+            Console.WriteLine("Digite o CNPJ da Companhia Aérea: ");
+            this.Cnpj = Console.ReadLine();
+
+            if (conexaoBanco.ExistirCnpj(sqlConnection, this.Cnpj) == false)
+            {
+                Console.WriteLine("Cnpj não localizado!");
+             
+            }
+
+            else if(conexaoBanco.ExistirCnpj(sqlConnection, this.Cnpj) == true)
+            {
+                conexaoBanco.ConsultarCia(sqlConnection, this.Cnpj);
+            }
+
 
         }
 
-        public void EditarCia()
+        public void EditarCia(ConexaoBanco conexaoBanco, SqlConnection sqlConnection)
         {
+            Console.WriteLine("Digite o Cnpj: ");
+            string cnpj = Console.ReadLine();
 
+            if (conexaoBanco.ExistirCnpj(sqlConnection, cnpj) == false)
+            {
+                Console.WriteLine("Cnpj não localizado!");
+            }
+
+            else if (conexaoBanco.ExistirCnpj(sqlConnection, cnpj) == true)
+            {
+                Console.WriteLine("Escolha o campo para editar: ");
+                Console.WriteLine("1-Razao Social");
+                Console.WriteLine("2-Data Abertura");
+                Console.WriteLine("3-Data Cadastro");
+                Console.WriteLine("4-Ultimo Voo");
+                Console.WriteLine("5-Situação");
+                int op = int.Parse(Console.ReadLine());
+
+                conexaoBanco.AtualizarCia(sqlConnection, cnpj, op);
+            }
         }
 
         public void ImprimirCia()
