@@ -91,9 +91,21 @@ namespace POnTheFly2
 
         }
 
-        public void LocalizarVoo()
+        public void LocalizarVoo(SqlConnection sqlConnection, ConexaoBanco conexaoBanco)
         {
+            Console.WriteLine("Digite o IdVoo: ");
+            this.IdVoo = Console.ReadLine();
 
+            if (conexaoBanco.ExistirVoo(sqlConnection, this.IdVoo) == false)
+            {
+                Console.WriteLine("IdVoo não localizado!");
+
+            }
+
+            else if (conexaoBanco.ExistirVoo(sqlConnection, this.IdVoo) == true)
+            {
+                conexaoBanco.ConsultarVoo(sqlConnection, this.IdVoo);
+            }
         }
 
         public void EditarVoo()

@@ -252,7 +252,7 @@ namespace POnTheFly2
                     {
                         case 1: voo.CadastrarVoo(sqlConnection, conexaoBanco);
                             break;
-                        case 2: voo.LocalizarVoo();
+                        case 2: voo.LocalizarVoo(sqlConnection, conexaoBanco);
                             break;
                         case 3: voo.EditarVoo();
                             break;

@@ -41,7 +41,7 @@ namespace POnTheFly2
             cmd.Connection = sqlConnection;
             cmd.ExecuteNonQuery();
 
-            Console.WriteLine("Cadastro efetuado com sucesso!");
+            Console.WriteLine("Cadastro efetuado com sucesso!\n");
         }
 
         public void ConsultarPessoa(SqlConnection sqlConnection, string cpf)
@@ -65,7 +65,7 @@ namespace POnTheFly2
                     Console.WriteLine("Data Cadastro: {0}", reader.GetDateTime(3));
                     Console.WriteLine("Ultima Compra: {0}", reader.GetDateTime(4));
                     Console.WriteLine("Sexo: {0}", reader.GetString(5));
-                    Console.WriteLine("Data Nascimento: {0}", reader.GetDateTime(6));
+                    Console.WriteLine("Data Nascimento: {0}\n", reader.GetDateTime(6));
 
                 }
             }
@@ -88,7 +88,7 @@ namespace POnTheFly2
                 cmd.Connection = sqlConnection;
                 cmd.ExecuteNonQuery();
 
-                Console.WriteLine("Edição efetuada com sucesso!");
+                Console.WriteLine("Edição efetuada com sucesso!\n");
             }
 
             else if (op == 2)
@@ -104,7 +104,7 @@ namespace POnTheFly2
                 cmd.Connection = sqlConnection;
                 cmd.ExecuteNonQuery();
 
-                Console.WriteLine("Edição efetuada com sucesso!");
+                Console.WriteLine("Edição efetuada com sucesso!\n");
             }
 
             else if (op == 3)
@@ -120,7 +120,7 @@ namespace POnTheFly2
                 cmd.Connection = sqlConnection;
                 cmd.ExecuteNonQuery();
 
-                Console.WriteLine("Edição efetuada com sucesso!");
+                Console.WriteLine("Edição efetuada com sucesso!\n");
             }
 
             else if (op == 4)
@@ -136,7 +136,7 @@ namespace POnTheFly2
                 cmd.Connection = sqlConnection;
                 cmd.ExecuteNonQuery();
 
-                Console.WriteLine("Edição efetuada com sucesso!");
+                Console.WriteLine("Edição efetuada com sucesso!\n");
             }
 
             else if (op == 5)
@@ -152,7 +152,7 @@ namespace POnTheFly2
                 cmd.Connection = sqlConnection;
                 cmd.ExecuteNonQuery();
 
-                Console.WriteLine("Edição efetuada com sucesso!");
+                Console.WriteLine("Edição efetuada com sucesso!\n");
             }
 
             else
@@ -168,7 +168,7 @@ namespace POnTheFly2
                 cmd.Connection = sqlConnection;
                 cmd.ExecuteNonQuery();
 
-                Console.WriteLine("Edição efetuada com sucesso!");
+                Console.WriteLine("Edição efetuada com sucesso!\n");
             }
 
         }
@@ -184,7 +184,7 @@ namespace POnTheFly2
             cmd.Connection = sqlConnection;
             cmd.ExecuteNonQuery();
 
-            Console.WriteLine("Cadastro efetuado com sucesso!");
+            Console.WriteLine("Cadastro efetuado com sucesso!\n");
         }
 
 
@@ -218,7 +218,7 @@ namespace POnTheFly2
             cmd.Connection = sqlConnection;
             cmd.ExecuteNonQuery();
 
-            Console.WriteLine("Remoção efetuada com sucesso!");
+            Console.WriteLine("Remoção efetuada com sucesso!\n");
         }
 
         public bool ExistirRestrito(SqlConnection sqlConnection, string cpf)
@@ -302,7 +302,7 @@ namespace POnTheFly2
             cmd.Connection = sqlConnection;
             cmd.ExecuteNonQuery();
 
-            Console.WriteLine("Cadastro efetuado com sucesso!");
+            Console.WriteLine("Cadastro efetuado com sucesso!\n");
         }
 
         public void ConsultarCia(SqlConnection sqlConnection, string cnpj)
@@ -325,7 +325,7 @@ namespace POnTheFly2
                     Console.WriteLine("DataAbertura: {0}", reader.GetDateTime(2));
                     Console.WriteLine("Data Cadastro: {0}", reader.GetDateTime(3));
                     Console.WriteLine("Ultima Voo: {0}", reader.GetDateTime(4));
-                    Console.WriteLine("Situação: {0}", reader.GetString(5));
+                    Console.WriteLine("Situação: {0}\n", reader.GetString(5));
                     
 
                 }
@@ -347,7 +347,7 @@ namespace POnTheFly2
                 cmd.Connection = sqlConnection;
                 cmd.ExecuteNonQuery();
 
-                Console.WriteLine("Edição efetuada com sucesso!");
+                Console.WriteLine("Edição efetuada com sucesso!\n");
             }
 
             else if (op == 2)
@@ -363,7 +363,7 @@ namespace POnTheFly2
                 cmd.Connection = sqlConnection;
                 cmd.ExecuteNonQuery();
 
-                Console.WriteLine("Edição efetuada com sucesso!");
+                Console.WriteLine("Edição efetuada com sucesso!\n");
             }
 
             else if (op == 3)
@@ -378,7 +378,7 @@ namespace POnTheFly2
                 cmd.Connection = sqlConnection;
                 cmd.ExecuteNonQuery();
 
-                Console.WriteLine("Edição efetuada com sucesso!");
+                Console.WriteLine("Edição efetuada com sucesso!\n");
             }
 
             else if (op == 4)
@@ -394,7 +394,7 @@ namespace POnTheFly2
                 cmd.Connection = sqlConnection;
                 cmd.ExecuteNonQuery();
 
-                Console.WriteLine("Edição efetuada com sucesso!");
+                Console.WriteLine("Edição efetuada com sucesso!\n");
             }
 
             else if (op == 5)
@@ -410,7 +410,7 @@ namespace POnTheFly2
                 cmd.Connection = sqlConnection;
                 cmd.ExecuteNonQuery();
 
-                Console.WriteLine("Edição efetuada com sucesso!");
+                Console.WriteLine("Edição efetuada com sucesso!\n");
             }
 
            
@@ -427,7 +427,7 @@ namespace POnTheFly2
             cmd.Connection = sqlConnection;
             cmd.ExecuteNonQuery();
 
-            Console.WriteLine("Cadastro efetuado com sucesso!");
+            Console.WriteLine("Cadastro efetuado com sucesso!\n");
         }
 
         public void ConsultarBloqueado(SqlConnection sqlConnection, string cnpj)
@@ -460,7 +460,7 @@ namespace POnTheFly2
             cmd.Connection = sqlConnection;
             cmd.ExecuteNonQuery();
 
-            Console.WriteLine("Remoção efetuada com sucesso!");
+            Console.WriteLine("Remoção efetuada com sucesso!\n");
         }
 
         public bool ExistirBloqueado(SqlConnection sqlConnection, string cnpj)
@@ -544,13 +544,34 @@ namespace POnTheFly2
             cmd.Connection = sqlConnection;
             cmd.ExecuteNonQuery();
 
-            Console.WriteLine("Cadastro efetuado com sucesso!");
+            Console.WriteLine("Cadastro efetuado com sucesso!\n");
         }
-    
 
-        public void ConsultarVoo()
+
+        public void ConsultarVoo(SqlConnection sqlConnection, string idVoo )
         {
+            SqlCommand cmd = new SqlCommand();
 
+            cmd.CommandText = "SELECT Voo.IdVoo, Voo.Situacao, Voo.DataVoo, Voo.DataCadastro, Voo.Destino, Voo.AssentosOcupados, Voo.Inscricao FROM Voo WHERE IdVoo =@IdVoo;";
+            cmd.Parameters.AddWithValue("@IdVoo", System.Data.SqlDbType.VarChar).Value = idVoo;
+
+            cmd.Connection = sqlConnection;
+            cmd.ExecuteNonQuery();
+
+
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    Console.WriteLine("IdVoo: {0}", reader.GetString(0));
+                    Console.WriteLine("Situação: {0}", reader.GetString(1));
+                    Console.WriteLine("Data Voo: {0}", reader.GetDateTime(2));
+                    Console.WriteLine("Data Cadastro: {0}", reader.GetDateTime(3));
+                    Console.WriteLine("Destino: {0}", reader.GetString(4));
+                    Console.WriteLine("Assentos Ocupados: {0}", reader.GetInt32(5));
+                    Console.WriteLine("Inscrição: {0}\n", reader.GetString(6));
+                }
+            }
         }
 
         public void AtualizarVoo()
