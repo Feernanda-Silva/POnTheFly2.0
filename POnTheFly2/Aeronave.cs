@@ -103,9 +103,27 @@ namespace POnTheFly2
             }
         }
 
-        public void EditarAeronave()
+        public void EditarAeronave(ConexaoBanco conexaoBanco, SqlConnection sqlConnection)
         {
+            Console.WriteLine("Digite a Incricao: ");
+            string inscricao = Console.ReadLine();
 
+            if (conexaoBanco.ExistirAeronave(sqlConnection, inscricao) == false)
+            {
+                Console.WriteLine("Incricao não localizada!");
+            }
+
+            else if (conexaoBanco.ExistirAeronave(sqlConnection, inscricao) == true)
+            {
+                Console.WriteLine("Escolha o campo para editar: ");
+                Console.WriteLine("1-Capacidade");
+                Console.WriteLine("2-Ultima Venda");
+                Console.WriteLine("3-Situacao");
+                Console.WriteLine("4-Data Cadastro");
+                int op = int.Parse(Console.ReadLine());
+
+                conexaoBanco.AtualizarAeronave(sqlConnection, inscricao, op);
+            }
         }
 
         public void ImprimirAeronave()

@@ -285,7 +285,7 @@ namespace POnTheFly2
                             break;
                         case 2: aeronave.LocalizarAeronave(conexaoBanco, sqlConnection);
                             break;
-                        case 3: aeronave.EditarAeronave();
+                        case 3: aeronave.EditarAeronave(conexaoBanco, sqlConnection);
                             break;
                         case 4: aeronave.ImprimirAeronave();
                             break;

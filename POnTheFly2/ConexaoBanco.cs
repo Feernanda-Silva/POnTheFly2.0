@@ -564,9 +564,73 @@ namespace POnTheFly2
             }
         }
 
-        public void AtualizarAeronave()
+        public void AtualizarAeronave(SqlConnection sqlConnection, string inscricao, int op)
         {
+            if (op == 1)
+            {
+                Console.WriteLine("Capacidade: ");
+                int capacidade = int.Parse(Console.ReadLine());
 
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandText = "UPDATE Aeronave SET Capacidade= @Capacidade WHERE Inscricao= @Inscricao;";
+                cmd.Parameters.AddWithValue("@Inscricao", System.Data.SqlDbType.VarChar).Value = inscricao;
+                cmd.Parameters.AddWithValue("@Capacidade", System.Data.SqlDbType.Int).Value = capacidade;
+
+                cmd.Connection = sqlConnection;
+                cmd.ExecuteNonQuery();
+
+                Console.WriteLine("Edição efetuada com sucesso!");
+            }
+
+            else if (op == 2)
+            {
+                Console.WriteLine("Ultima Venda: ");
+                DateTime ultimaVenda = DateTime.Parse(Console.ReadLine());
+
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandText = "UPDATE Aeronave SET UltimaVenda= @UltimaVenda WHERE Inscricao= @Inscricao;";
+                cmd.Parameters.AddWithValue("@Inscricao", System.Data.SqlDbType.VarChar).Value = inscricao;
+                cmd.Parameters.AddWithValue("@UltimaVenda", System.Data.SqlDbType.DateTime).Value = ultimaVenda;
+
+                cmd.Connection = sqlConnection;
+                cmd.ExecuteNonQuery();
+
+                Console.WriteLine("Edição efetuada com sucesso!");
+            }
+
+            else if (op == 3)
+            {
+                Console.WriteLine("Situação: ");
+                char situacao = Char.Parse(Console.ReadLine());
+
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandText = "UPDATE Aeronave SET Situacao= @Situacao WHERE Inscricao= @Inscricao;";
+                cmd.Parameters.AddWithValue("@Inscricao", System.Data.SqlDbType.VarChar).Value = inscricao;
+                cmd.Parameters.AddWithValue("@Situacao", System.Data.SqlDbType.Char).Value = situacao;
+
+                cmd.Connection = sqlConnection;
+                cmd.ExecuteNonQuery();
+
+                Console.WriteLine("Edição efetuada com sucesso!");
+            }
+
+            else if (op == 4)
+            {
+                Console.WriteLine("Data Cadastro: ");
+                DateTime dataCadastro = DateTime.Parse(Console.ReadLine());
+
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandText = "UPDATE Aeronave SET DataCadastro= @DataCadastro WHERE Inscricao= @Inscricao;";
+                cmd.Parameters.AddWithValue("@Inscricao", System.Data.SqlDbType.VarChar).Value = inscricao;
+                cmd.Parameters.AddWithValue("@DataCadastro", System.Data.SqlDbType.DateTime).Value = dataCadastro;
+
+                cmd.Connection = sqlConnection;
+                cmd.ExecuteNonQuery();
+
+                Console.WriteLine("Edição efetuada com sucesso!");
+            }
+
+     
         }
 
         public bool ExistirAeronave(SqlConnection sqlConnection, string inscricao)
