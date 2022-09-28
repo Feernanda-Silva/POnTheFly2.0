@@ -14,7 +14,7 @@ namespace POnTheFly2
         public DateTime DataCadastro { get; set; }
         public string Destino { get; set; }
         public int AssentosOcupados { get; set; }
-        public Aeronave Inscricao { get; set; }
+        public string Inscricao { get; set; }
 
         public Voo()
         {

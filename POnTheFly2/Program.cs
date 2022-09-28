@@ -214,9 +214,9 @@ namespace POnTheFly2
 
                     switch (opBloq)
                     {
-                        case 1: bloqueado.CadastrarBloqueado();
+                        case 1: bloqueado.CadastrarBloqueado(sqlConnection, conexaoBanco, companhiaAerea);
                             break;
-                        case 2: bloqueado.LocalizarBloqueado();
+                        case 2: bloqueado.LocalizarBloqueado(sqlConnection, conexaoBanco);
                             break;
                         case 3: bloqueado.RetirarBloqueado();
                             break;

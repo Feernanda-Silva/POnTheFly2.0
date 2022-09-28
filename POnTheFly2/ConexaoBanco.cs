@@ -421,21 +421,68 @@ namespace POnTheFly2
         {
             SqlCommand cmd = new SqlCommand();
 
-            cmd.CommandText = "INSERT INTO Bloqueado (Cnpj) VALUES(@Cnpj);";
+            cmd.CommandText = "INSERT INTO Bloqueados (Cnpj) VALUES(@Cnpj);";
             cmd.Parameters.AddWithValue("@Cnpj", System.Data.SqlDbType.VarChar).Value = Cnpj;
 
             cmd.Connection = sqlConnection;
             cmd.ExecuteNonQuery();
+
+            Console.WriteLine("Cadastro efetuado com sucesso!");
         }
 
-        public void ConsultarBloqueado()
+        public void ConsultarBloqueado(SqlConnection sqlConnection, string cnpj)
         {
+            SqlCommand cmd = new SqlCommand();
 
+            cmd.CommandText = "SELECT Cnpj From Bloqueados WHERE Bloqueados.Cnpj = @Cnpj;";
+            cmd.Parameters.AddWithValue("@Cnpj", System.Data.SqlDbType.VarChar).Value = cnpj;
+
+            cmd.Connection = sqlConnection;
+            cmd.ExecuteNonQuery();
+
+
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    Console.WriteLine("Cnpj bloqueado: {0}", reader.GetString(0));
+                }
+            }
         }
 
         public void DeletarBloqueado()
         {
 
+        }
+
+        public bool ExistirBloqueado(SqlConnection sqlConnection, string cnpj)
+        {
+            SqlCommand cmd = new SqlCommand();
+
+            cmd.CommandText = "SELECT Cnpj FROM Bloqueados WHERE Cnpj = @Cnpj";
+            cmd.Parameters.AddWithValue("@Cnpj", System.Data.SqlDbType.VarChar).Value = cnpj;
+
+            cmd.Connection = sqlConnection;
+            cmd.ExecuteNonQuery();
+
+            bool possuiCnpjCadastrado = false;
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+
+                while (reader.Read())
+                {
+                    if (reader.IsDBNull(0))
+                    {
+                        possuiCnpjCadastrado = false;
+                    }
+
+                    else
+                    {
+                        possuiCnpjCadastrado = true;
+                    }
+                }
+            }
+            return possuiCnpjCadastrado;
         }
 
         public bool ExistirCnpj(SqlConnection sqlConnection, string cnpj)
