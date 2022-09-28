@@ -526,10 +526,27 @@ namespace POnTheFly2
     
 
         // Para Voo
-        public void InserirVoo()
+        public void InserirVoo(SqlConnection sqlConnection, string idVoo, char situacao, DateTime dataVoo, DateTime dataCadastro, string destino, 
+            int assentosOcupados, string inscricao)
         {
+            SqlCommand cmd = new SqlCommand();
 
+            cmd.CommandText = "INSERT INTO Voo (IdVoo,Situacao,DataVoo, DataCadastro, Destino, AssentosOcupados, Inscricao) VALUES(@IdVoo, @Situacao, " +
+                "@DataVoo, @DataCadastro,@Destino, @AssentosOcupados, @Inscricao);";
+            cmd.Parameters.AddWithValue("@IdVoo", System.Data.SqlDbType.VarChar).Value = idVoo;
+            cmd.Parameters.AddWithValue("@Situacao", System.Data.SqlDbType.Char).Value = situacao;
+            cmd.Parameters.AddWithValue("@DataVoo", System.Data.SqlDbType.DateTime).Value = dataVoo;
+            cmd.Parameters.AddWithValue("@DataCadastro", System.Data.SqlDbType.DateTime).Value = dataCadastro;
+            cmd.Parameters.AddWithValue("@Destino", System.Data.SqlDbType.VarChar).Value = destino;
+            cmd.Parameters.AddWithValue("@AssentosOcupados", System.Data.SqlDbType.Int).Value = assentosOcupados;
+            cmd.Parameters.AddWithValue("@Inscricao", System.Data.SqlDbType.VarChar).Value = inscricao;
+           
+            cmd.Connection = sqlConnection;
+            cmd.ExecuteNonQuery();
+
+            Console.WriteLine("Cadastro efetuado com sucesso!");
         }
+    
 
         public void ConsultarVoo()
         {
@@ -572,14 +589,29 @@ namespace POnTheFly2
         }
         public void InserirDestino(SqlConnection sqlConnection, string sigla, string nome)
         {
+            SqlCommand cmd = new SqlCommand();
+
+            cmd.CommandText = "INSERT INTO Destino(Sigla,Nome) VALUES(@Sigla, @Nome);";
+            cmd.Parameters.AddWithValue("@Sigla", System.Data.SqlDbType.VarChar).Value = sigla;
+            cmd.Parameters.AddWithValue("@Nome", System.Data.SqlDbType.VarChar).Value = nome;
+
+            cmd.Connection = sqlConnection;
+            cmd.ExecuteNonQuery();
+
+            Console.WriteLine("Cadastro efetuado com sucesso!");
+        }
+
+        public void ConsultarDestino(SqlConnection sqlConnection, string sigla)
+        {
 
         }
+
         public bool ExistirDestino(SqlConnection sqlConnection, string destino)
         {
             SqlCommand cmd = new SqlCommand();
 
-            cmd.CommandText = "SELECT Voo.Destino FROM Voo WHERE Voo.Destino= @Destino";
-            cmd.Parameters.AddWithValue("@Sigla", System.Data.SqlDbType.VarChar).Value = destino; 
+            cmd.CommandText = "SELECT Sigla FROM Destino WHERE Sigla= @Destino";
+            cmd.Parameters.AddWithValue("@Destino", System.Data.SqlDbType.VarChar).Value = destino; 
 
             cmd.Connection = sqlConnection;
             cmd.ExecuteNonQuery();

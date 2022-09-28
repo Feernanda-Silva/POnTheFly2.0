@@ -24,5 +24,10 @@ namespace POnTheFly2
             conexaoBanco.InserirDestino(sqlConection, this.Sigla, this.Aeroporto);
 
         }
+
+        public void LocalizarDestino(SqlConnection sqlConnection, ConexaoBanco conexaoBanco)
+        {
+
+        }
     }
 }

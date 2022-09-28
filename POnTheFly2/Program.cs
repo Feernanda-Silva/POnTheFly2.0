@@ -19,6 +19,7 @@ namespace POnTheFly2
             Passagem passagem = new Passagem(); 
             Venda venda = new Venda();
             ItemVenda itemVenda = new ItemVenda();  
+            Destino destino = new Destino();    
 
             MenuInicial();
 
@@ -243,12 +244,13 @@ namespace POnTheFly2
                     Console.WriteLine("2-Localizar");
                     Console.WriteLine("3-Editar");
                     Console.WriteLine("4-Impressão por Registro");
-                    Console.WriteLine("5-Menu Inicial");
+                    Console.WriteLine("5-Destino");
+                    Console.WriteLine("6-Menu Inicial");
                     opVoo = int.Parse(Console.ReadLine());
 
                     switch (opVoo)
                     {
-                        case 1: voo.CadastrarVoo();
+                        case 1: voo.CadastrarVoo(sqlConnection, conexaoBanco);
                             break;
                         case 2: voo.LocalizarVoo();
                             break;
@@ -256,14 +258,43 @@ namespace POnTheFly2
                             break;
                         case 4: voo.ImprimirVoo();
                             break;
-                        case 5:
-                            MenuInicial();
+                        case 5:  MenuDestino();
+                            break;
+                        case 6: MenuInicial();
                             break;
                     }
 
-                } while (opVoo > 0 && opVoo < 6);
+                } while (opVoo > 0 && opVoo < 7);
             }
 
+            void MenuDestino()
+            {
+                int opDestino; 
+                do
+                {
+                    Console.WriteLine("--- Menu Destino ---");
+                    Console.WriteLine("Digite a opção desejada: ");
+                    Console.WriteLine("1-Cadastrar");
+                    Console.WriteLine("2-Localizar");
+                    Console.WriteLine("3-Menu Voo");
+                    Console.WriteLine("4-Menu Inicial");
+
+                    opDestino = int.Parse(Console.ReadLine());
+
+                    switch (opDestino)
+                    {
+                        case 1: destino.CadastrarDestino(sqlConnection, conexaoBanco);
+                            break;
+                        case 2: destino.LocalizarDestino(sqlConnection, conexaoBanco);
+                            break;
+                        case 3: MenuVoo();
+                            break;
+                        case 4: MenuInicial();
+                            break;
+                    }
+
+                } while (opDestino > 0 && opDestino < 5);
+            }
             void MenuAeronave()
             {
                 int opAeronave;

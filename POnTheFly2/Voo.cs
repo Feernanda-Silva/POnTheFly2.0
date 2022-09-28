@@ -34,7 +34,7 @@ namespace POnTheFly2
 
             this.IdVoo = "V" + numero;
 
-            while (conexaoBanco.ExistirVoo(sqlConnection, this.Inscricao) == true)
+            while (conexaoBanco.ExistirVoo(sqlConnection, this.IdVoo) == true)
             {
                 Console.WriteLine("Impossivel cadastrar um Voo!");
                 Console.WriteLine("IdVoo já existe existe!");
@@ -43,20 +43,14 @@ namespace POnTheFly2
                 this.IdVoo = Console.ReadLine();
             }
 
-            Console.WriteLine("Nome do Aeroporto de Destino: ");
-            string aeroporto = Console.ReadLine();
-            Console.WriteLine("Sigla do Aeroporto: ");
-            string sigla = Console.ReadLine();
-            this.Destino = sigla + "-" + aeroporto;
+           
+            Console.WriteLine("Sigla do Aeroporto de destino: ");
+            this.Destino = Console.ReadLine(); 
 
             while(conexaoBanco.ExistirDestino(sqlConnection, this.Destino) == false)
             {
-                Console.WriteLine("Impossivel destino, digite um destino existente: ");
-                Console.WriteLine("Nome do Aeroporto de Destino: ");
-                aeroporto = Console.ReadLine();
-                Console.WriteLine("Sigla do Aeroporto: ");
-                sigla = Console.ReadLine();
-                this.Destino = sigla + "-" + aeroporto;
+                Console.WriteLine("Digite um destino existente!: ");
+                this.Destino = Console.ReadLine();
             }
 
             Console.WriteLine("Inscrição Aeronave: ");
@@ -90,8 +84,9 @@ namespace POnTheFly2
                 this.Situacao = char.Parse(Console.ReadLine());
             }
 
+            //Assentos Ocupados com base na Passagem vendida
 
-
+            conexaoBanco.InserirVoo(sqlConnection, this.IdVoo, this.Situacao, this.DataVoo, this.DataCadastro, this.Destino, this.AssentosOcupados, this.Inscricao);
 
 
         }
