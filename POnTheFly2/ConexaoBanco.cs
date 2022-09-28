@@ -10,7 +10,7 @@ namespace POnTheFly2
     internal class ConexaoBanco
     {
 
-        string conexaosql = "Data Source=localhost;Initial Catalog=ONG;User Id=sa;Password=fernanda123;";
+        string conexaosql = "Data Source=localhost;Initial Catalog=OnTheFly;User Id=sa;Password=fernanda123;";
 
         public SqlConnection ConectarBanco()
         {
@@ -22,17 +22,55 @@ namespace POnTheFly2
 
         //Metodos feitos para fazer ações no banco de INSERT, SELECT, UPDATE. 
         //Para Pessoa
-        public void InserirPessoa()
+        public void InserirPessoa(string cpf, string nome, DateTime dataNascimento, char sexo, 
+            DateTime dataUltimaCompra,  DateTime dataCadastro, char situacao, SqlConnection sqlConnection)
+            
         {
+            SqlCommand cmd = new SqlCommand();
 
+            cmd.CommandText = "INSERT INTO Passageiro(Cpf,Nome, Situacao, DataCadastro, UltimaCompra, Sexo, DataNascimento)" +
+                " VALUES(@CPF, @Nome, @Situacao,@DataCadastro,@UltimaCompra, @Sexo, @DataNascimento);";
+            cmd.Parameters.AddWithValue("@Cpf", System.Data.SqlDbType.VarChar).Value = cpf;
+            cmd.Parameters.AddWithValue("@Nome", System.Data.SqlDbType.Char).Value = nome;
+            cmd.Parameters.AddWithValue("@Situacao", System.Data.SqlDbType.Char).Value = situacao;
+            cmd.Parameters.AddWithValue("@DataCadastro", System.Data.SqlDbType.DateTime).Value = dataCadastro;
+            cmd.Parameters.AddWithValue("@UltimaCompra", System.Data.SqlDbType.DateTime).Value = dataUltimaCompra;
+            cmd.Parameters.AddWithValue("@Sexo", System.Data.SqlDbType.DateTime).Value = sexo;
+            cmd.Parameters.AddWithValue("@DataNascimento", System.Data.SqlDbType.DateTime).Value = dataNascimento;
+
+            cmd.Connection = sqlConnection;
+            cmd.ExecuteNonQuery();
         }
 
-        public void ConsultarPessoa()
+        public void ConsultarPessoa(SqlConnection sqlConnection, string cpf)
         {
+            SqlCommand cmd = new SqlCommand();
 
+            cmd.CommandText = "SELECT Passageiro.Cpf,Passageiro.Nome,Passageiro.Situacao,Passageiro.DataCadastro,Passageiro.UltimaCompra,Passageiro.Sexo,Passageiro.DataNascimento FROM Passageiro WHERE Passageiro.Cpf = @Cpf;";
+
+            cmd.Parameters.AddWithValue("@CPF", System.Data.SqlDbType.VarChar).Value = cpf;
+
+            cmd.Connection = sqlConnection;
+            cmd.ExecuteNonQuery();
+
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    Console.WriteLine("Cpf: {0}", reader.GetString(0));
+                    Console.WriteLine("Nome: {0}", reader.GetString(1));
+                    Console.WriteLine("Situação: {0}", reader.GetString(2));
+                    Console.WriteLine("Data Cadastro: {0}", reader.GetDateTime(3));
+                    Console.WriteLine("Ultima Compra: {0}", reader.GetDateTime(4));
+                    Console.WriteLine("Sexo: {0}", reader.GetString(5));
+                    Console.WriteLine("Data Nascimento: {0}", reader.GetDateTime(6));
+                   
+                }
+            }
         }
+    
 
-        public void AtualizarPessoa()
+        public void AtualizarPessoa(SqlConnection sqlConnection, string cpf)
         {
 
         }
@@ -54,10 +92,36 @@ namespace POnTheFly2
         }
 
 
-        public bool ExistirCpf() //Se já existe no banco 
+        public bool ExistirCpf(SqlConnection sqlConnection, string cpf) //Se já existe no banco 
         {
-            return true; // false
+            SqlCommand cmd = new SqlCommand();
+
+            cmd.CommandText = "SELECT CPF FROM Passageiro WHERE CPF = @CPF";
+            cmd.Parameters.AddWithValue("@CPF", System.Data.SqlDbType.VarChar).Value = cpf;
+
+            cmd.Connection = sqlConnection;
+            cmd.ExecuteNonQuery();
+
+            bool possuiCpfCadastrado = false;
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+
+                while (reader.Read())
+                {
+                    if (reader.IsDBNull(0))
+                    {
+                        possuiCpfCadastrado = false;
+                    }
+
+                    else
+                    {
+                        possuiCpfCadastrado = true;
+                    }
+                }
+            }
+            return possuiCpfCadastrado;
         }
+    
 
         //Para Companhia Aerea
         public void InserirCia()

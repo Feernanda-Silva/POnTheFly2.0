@@ -7,9 +7,8 @@ namespace POnTheFly2
     {
         static void Main(string[] args)
         {
-            ConexaoBanco  conexao = new ConexaoBanco();
-            SqlConnection sqlConnection = conexao.ConectarBanco();
-
+            ConexaoBanco conexaoBanco = new ConexaoBanco();
+            SqlConnection sqlConnection = conexaoBanco.ConectarBanco();
 
             Passageiro passageiro = new Passageiro();
             Restritos restrito = new Restritos();
@@ -108,11 +107,11 @@ namespace POnTheFly2
 
                     switch (opPassageiro)
                     {
-                        case 1: passageiro.CadastrarPassageiro();
+                        case 1: passageiro.CadastrarPassageiro(conexaoBanco, sqlConnection);
                             break;
-                        case 2: passageiro.LocalizarPassageiro();
+                        case 2: passageiro.LocalizarPassageiro(conexaoBanco, sqlConnection);
                             break;
-                        case 3: passageiro.EditarPassageiro();
+                        case 3: passageiro.EditarPassageiro(conexaoBanco, sqlConnection);
                             break;
                         case 4:
                             MenuRestritos();
