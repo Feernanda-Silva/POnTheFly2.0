@@ -172,10 +172,17 @@ namespace POnTheFly2
         }
 
         //Para Pessoas Restritas 
-        public void InserirRestrito()
+        public void InserirRestrito(SqlConnection sqlConnection, string cpf)
         {
+            SqlCommand cmd = new SqlCommand();
 
+            cmd.CommandText = "INSERT INTO Restritos (Cpf) VALUES(@CPF);";
+            cmd.Parameters.AddWithValue("@Cpf", System.Data.SqlDbType.VarChar).Value = cpf;
+            
+            cmd.Connection = sqlConnection;
+            cmd.ExecuteNonQuery();
         }
+    
 
         public void ConsultarRestrito()
         {
@@ -186,6 +193,37 @@ namespace POnTheFly2
         {
 
         }
+
+        public bool ExistirRestrito(SqlConnection sqlConnection, string cpf)
+        {
+            SqlCommand cmd = new SqlCommand();
+
+            cmd.CommandText = "SELECT CPF FROM Restritos WHERE CPF = @CPF";
+            cmd.Parameters.AddWithValue("@CPF", System.Data.SqlDbType.VarChar).Value = cpf;
+
+            cmd.Connection = sqlConnection;
+            cmd.ExecuteNonQuery();
+
+            bool possuiCpfCadastrado = false;
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+
+                while (reader.Read())
+                {
+                    if (reader.IsDBNull(0))
+                    {
+                        possuiCpfCadastrado = false;
+                    }
+
+                    else
+                    {
+                        possuiCpfCadastrado = true;
+                    }
+                }
+            }
+            return possuiCpfCadastrado;
+        }
+    
 
 
         public bool ExistirCpf(SqlConnection sqlConnection, string cpf) //Se já existe no banco 
@@ -236,9 +274,15 @@ namespace POnTheFly2
         }
 
         //Para Companhia Aerea Bloqueadas
-        public void InserirBloqueado()
+        public void InserirBloqueado(SqlConnection sqlConnection, string Cnpj)
         {
+            SqlCommand cmd = new SqlCommand();
 
+            cmd.CommandText = "INSERT INTO Bloqueado (Cnpj) VALUES(@Cnpj);";
+            cmd.Parameters.AddWithValue("@Cnpj", System.Data.SqlDbType.VarChar).Value = Cnpj;
+
+            cmd.Connection = sqlConnection;
+            cmd.ExecuteNonQuery();
         }
 
         public void ConsultarBloqueado()

@@ -141,7 +141,7 @@ namespace POnTheFly2
 
                     switch (opRestritos)
                     {
-                        case 1: restrito.CadastrarRestrito();
+                        case 1: restrito.CadastrarRestrito(sqlConnection, conexaoBanco, passageiro);
                             break;
                         case 2: restrito.LocalizarRestrito();
                             break;
