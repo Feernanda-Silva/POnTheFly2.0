@@ -108,13 +108,21 @@ namespace POnTheFly2
             string cpf = Console.ReadLine();
 
             if (conexaoBanco.ExistirCpf(sqlConnection, cpf) == false)
-            {
+            {   
                 Console.WriteLine("CPF não localizado!");
             }
 
             else if (conexaoBanco.ExistirCpf(sqlConnection, cpf) == true)
             {
-                conexaoBanco.AtualizarPessoa(sqlConnection, cpf);
+                Console.WriteLine("Escolha o campo para editar: ");
+                Console.WriteLine("1-Nome");
+                Console.WriteLine("2-Data de nascimento");
+                Console.WriteLine("3-Sexo");
+                Console.WriteLine("4-Data Ultima Compra");
+                Console.WriteLine("5-Data Cadastro");
+                Console.WriteLine("6- Situação");
+                int op = int.Parse(Console.ReadLine());
+                conexaoBanco.AtualizarPessoa(sqlConnection, cpf , op);
             }
 
         }

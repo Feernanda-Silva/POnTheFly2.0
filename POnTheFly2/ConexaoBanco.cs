@@ -22,9 +22,9 @@ namespace POnTheFly2
 
         //Metodos feitos para fazer ações no banco de INSERT, SELECT, UPDATE. 
         //Para Pessoa
-        public void InserirPessoa(string cpf, string nome, DateTime dataNascimento, char sexo, 
-            DateTime dataUltimaCompra,  DateTime dataCadastro, char situacao, SqlConnection sqlConnection)
-            
+        public void InserirPessoa(string cpf, string nome, DateTime dataNascimento, char sexo,
+            DateTime dataUltimaCompra, DateTime dataCadastro, char situacao, SqlConnection sqlConnection)
+
         {
             SqlCommand cmd = new SqlCommand();
 
@@ -64,14 +64,110 @@ namespace POnTheFly2
                     Console.WriteLine("Ultima Compra: {0}", reader.GetDateTime(4));
                     Console.WriteLine("Sexo: {0}", reader.GetString(5));
                     Console.WriteLine("Data Nascimento: {0}", reader.GetDateTime(6));
-                   
+
                 }
             }
         }
-    
 
-        public void AtualizarPessoa(SqlConnection sqlConnection, string cpf)
-        {
+
+        public void AtualizarPessoa(SqlConnection sqlConnection, string cpf, int op)
+        {   
+
+            if (op == 1)
+            {
+                Console.WriteLine("Nome: ");
+                string nome = Console.ReadLine();
+
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandText = "UPDATE Passageiro SET Nome = @Nome WHERE Passageiro.Cpf = @CPF;";
+                cmd.Parameters.AddWithValue("@Cpf", System.Data.SqlDbType.VarChar).Value = cpf;
+                cmd.Parameters.AddWithValue("@Nome", System.Data.SqlDbType.VarChar).Value = nome;
+
+                cmd.Connection = sqlConnection;
+                cmd.ExecuteNonQuery();
+
+                Console.WriteLine("Edição efetuada com sucesso!");
+            }
+           
+            else if (op == 2)
+            {
+                Console.WriteLine("Data de Nascimento: ");
+                DateTime dataNascimento = DateTime.Parse(Console.ReadLine());
+
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandText = "UPDATE Passageiro SET DataNascimento = @DataNascimento WHERE Passageiro.Cpf = @CPF;";
+                cmd.Parameters.AddWithValue("@Cpf", System.Data.SqlDbType.VarChar).Value = cpf;
+                cmd.Parameters.AddWithValue("@DataNascimento", System.Data.SqlDbType.DateTime).Value = dataNascimento;
+
+                cmd.Connection = sqlConnection;
+                cmd.ExecuteNonQuery();
+
+                Console.WriteLine("Edição efetuada com sucesso!");
+            }
+
+            else if (op == 3)
+            {
+                Console.WriteLine("Sexo: ");
+                char sexo = Char.Parse(Console.ReadLine());
+
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandText = "UPDATE Passageiro SET Sexo = @Sexo WHERE Passageiro.Cpf= @CPF;";
+                cmd.Parameters.AddWithValue("@Cpf", System.Data.SqlDbType.VarChar).Value = cpf;
+                cmd.Parameters.AddWithValue("@Sexo", System.Data.SqlDbType.Char).Value = sexo;
+
+                cmd.Connection = sqlConnection;
+                cmd.ExecuteNonQuery();
+
+                Console.WriteLine("Edição efetuada com sucesso!");
+            }
+
+            else if (op == 4)
+            {
+                Console.WriteLine("Data Ultima Compra: ");
+                DateTime ultimaCompra = DateTime.Parse(Console.ReadLine());
+
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandText = "UPDATE Passageiro SET UltimaCompra = @UltimaCompra WHERE Passageiro.Cpf= @CPF;";
+                cmd.Parameters.AddWithValue("@Cpf", System.Data.SqlDbType.VarChar).Value = cpf;
+                cmd.Parameters.AddWithValue("@UltimaCompra", System.Data.SqlDbType.VarChar).Value = ultimaCompra;
+
+                cmd.Connection = sqlConnection;
+                cmd.ExecuteNonQuery();
+
+                Console.WriteLine("Edição efetuada com sucesso!");
+            }
+
+            else if (op == 5)
+            {
+                Console.WriteLine("Data Cadastro: ");
+                DateTime dataCadastro = DateTime.Parse(Console.ReadLine());
+
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandText = "UPDATE Passageiro SET DataCadastro = @DataCadastro WHERE Passageiro.Cpf= @CPF;";
+                cmd.Parameters.AddWithValue("@Cpf", System.Data.SqlDbType.VarChar).Value = cpf;
+                cmd.Parameters.AddWithValue("@DataCadastro", System.Data.SqlDbType.DateTime).Value = dataCadastro;
+
+                cmd.Connection = sqlConnection;
+                cmd.ExecuteNonQuery();
+
+                Console.WriteLine("Edição efetuada com sucesso!");
+            }
+
+            else
+            {
+                Console.WriteLine("Situação: ");
+                char situacao = Char.Parse(Console.ReadLine());
+
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandText = "UPDATE Passageiro SET Situacao = @Situacao WHERE Passageiro.Cpf= @CPF;";
+                cmd.Parameters.AddWithValue("@Cpf", System.Data.SqlDbType.VarChar).Value = cpf;
+                cmd.Parameters.AddWithValue("@Situacao", System.Data.SqlDbType.Char).Value = situacao;
+
+                cmd.Connection = sqlConnection;
+                cmd.ExecuteNonQuery();
+
+                Console.WriteLine("Edição efetuada com sucesso!");
+            }
 
         }
 
@@ -121,7 +217,7 @@ namespace POnTheFly2
             }
             return possuiCpfCadastrado;
         }
-    
+
 
         //Para Companhia Aerea
         public void InserirCia()
