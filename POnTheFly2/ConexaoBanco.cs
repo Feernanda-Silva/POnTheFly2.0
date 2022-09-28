@@ -279,9 +279,22 @@ namespace POnTheFly2
 
 
         //Para Companhia Aerea
-        public void InserirCia()
+        public void InserirCia(SqlConnection sqlConnection, string cnpj, string razaoSocial, 
+            DateTime dataAbertura, DateTime ultimoVoo, DateTime dataCadastro, char situacao)
         {
+            SqlCommand cmd = new SqlCommand();
 
+            cmd.CommandText = "INSERT INTO Companhia_Aerea (Cnpj, RazaoSocial, DataAbertura, DataCadastro, UltimoVoo, Situacao)" +
+                " VALUES(@Cnpj, @RazaoSocial, @DataAbertura,@DataCadastro,@UltimoVoo, @Situacao);";
+            cmd.Parameters.AddWithValue("@Cnpj", System.Data.SqlDbType.VarChar).Value = cnpj;
+            cmd.Parameters.AddWithValue("@RazaoSocial", System.Data.SqlDbType.Char).Value = razaoSocial;
+            cmd.Parameters.AddWithValue("@DataAbertura", System.Data.SqlDbType.Char).Value = dataAbertura;
+            cmd.Parameters.AddWithValue("@DataCadastro", System.Data.SqlDbType.DateTime).Value = dataCadastro;
+            cmd.Parameters.AddWithValue("@UltimoVoo", System.Data.SqlDbType.DateTime).Value = ultimoVoo;
+            cmd.Parameters.AddWithValue("@Situacao", System.Data.SqlDbType.DateTime).Value = situacao;
+            
+            cmd.Connection = sqlConnection;
+            cmd.ExecuteNonQuery();
         }
 
         public void ConsultarCia()
@@ -316,10 +329,37 @@ namespace POnTheFly2
 
         }
 
-        public bool ExistirCnpj()
+        public bool ExistirCnpj(SqlConnection sqlConnection, string cnpj)
         {
-            return true; // false
+
+            SqlCommand cmd = new SqlCommand();
+
+            cmd.CommandText = "SELECT Cnpj FROM Companhia_Aerea WHERE Cnpj = @Cnpj";
+            cmd.Parameters.AddWithValue("@Cnpj", System.Data.SqlDbType.VarChar).Value = cnpj;
+
+            cmd.Connection = sqlConnection;
+            cmd.ExecuteNonQuery();
+
+            bool possuiCnpjCadastrado = false;
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+
+                while (reader.Read())
+                {
+                    if (reader.IsDBNull(0))
+                    {
+                        possuiCnpjCadastrado = false;
+                    }
+
+                    else
+                    {
+                        possuiCnpjCadastrado = true;
+                    }
+                }
+            }
+            return possuiCnpjCadastrado;
         }
+    
 
         // Para Voo
         public void InserirVoo()

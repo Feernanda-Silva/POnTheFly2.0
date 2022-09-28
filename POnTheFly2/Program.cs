@@ -179,7 +179,7 @@ namespace POnTheFly2
 
                     switch (opCia)
                     {
-                        case 1: companhiaAerea.CadastrarCia();
+                        case 1: companhiaAerea.CadastrarCia(conexaoBanco, sqlConnection);
                             break;
                         case 2: companhiaAerea.LocalizarCia();
                             break;
