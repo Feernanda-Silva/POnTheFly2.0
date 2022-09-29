@@ -10,7 +10,7 @@ namespace POnTheFly2
     {
         public string IdItemVenda { get; set; }
         public float ValorUnitario { get; set; }
-        public Passagem IdPassagem { get; set; }
+        public string IdPassagem { get; set; }
 
         public void CadastrarItemVenda()
         {

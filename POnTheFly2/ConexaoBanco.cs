@@ -21,8 +21,8 @@ namespace POnTheFly2
 
 
         //Metodos feitos para fazer ações no banco de INSERT, SELECT, UPDATE. 
-        //Para Pessoa
-        public void InserirPessoa(string cpf, string nome, DateTime dataNascimento, char sexo,
+        //Para Passageiro
+        public void InserirPassageiro(string cpf, string nome, DateTime dataNascimento, char sexo,
             DateTime dataUltimaCompra, DateTime dataCadastro, char situacao, SqlConnection sqlConnection)
 
         {
@@ -44,7 +44,7 @@ namespace POnTheFly2
             Console.WriteLine("Cadastro efetuado com sucesso!\n");
         }
 
-        public void ConsultarPessoa(SqlConnection sqlConnection, string cpf)
+        public void ConsultarPassageiro(SqlConnection sqlConnection, string cpf)
         {
             SqlCommand cmd = new SqlCommand();
 
@@ -72,7 +72,7 @@ namespace POnTheFly2
         }
 
 
-        public void AtualizarPessoa(SqlConnection sqlConnection, string cpf, int op)
+        public void AtualizarPassageiro(SqlConnection sqlConnection, string cpf, int op)
         {
 
             if (op == 1)
@@ -285,7 +285,7 @@ namespace POnTheFly2
 
 
         //Para Companhia Aerea
-        public void InserirCia(SqlConnection sqlConnection, string cnpj, string razaoSocial, 
+        public void InserirCia(SqlConnection sqlConnection, string cnpj, string razaoSocial,
             DateTime dataAbertura, DateTime ultimoVoo, DateTime dataCadastro, char situacao)
         {
             SqlCommand cmd = new SqlCommand();
@@ -298,7 +298,7 @@ namespace POnTheFly2
             cmd.Parameters.AddWithValue("@DataCadastro", System.Data.SqlDbType.DateTime).Value = dataCadastro;
             cmd.Parameters.AddWithValue("@UltimoVoo", System.Data.SqlDbType.DateTime).Value = ultimoVoo;
             cmd.Parameters.AddWithValue("@Situacao", System.Data.SqlDbType.Char).Value = situacao;
-            
+
             cmd.Connection = sqlConnection;
             cmd.ExecuteNonQuery();
 
@@ -326,7 +326,7 @@ namespace POnTheFly2
                     Console.WriteLine("Data Cadastro: {0}", reader.GetDateTime(3));
                     Console.WriteLine("Ultima Voo: {0}", reader.GetDateTime(4));
                     Console.WriteLine("Situação: {0}\n", reader.GetString(5));
-                    
+
 
                 }
             }
@@ -369,7 +369,7 @@ namespace POnTheFly2
             else if (op == 3)
             {
                 Console.WriteLine("Data Cadastro: ");
-                DateTime dataCadastro= DateTime.Parse(Console.ReadLine()); ;
+                DateTime dataCadastro = DateTime.Parse(Console.ReadLine()); ;
 
                 SqlCommand cmd = new SqlCommand();
                 cmd.CommandText = "UPDATE Companhia_Aerea SET DataCadastro= @DataCadastro WHERE Cnpj= @Cnpj;";
@@ -413,7 +413,7 @@ namespace POnTheFly2
                 Console.WriteLine("Edição efetuada com sucesso!\n");
             }
 
-           
+
         }
 
         //Para Companhia Aerea Bloqueadas
@@ -523,10 +523,10 @@ namespace POnTheFly2
             }
             return possuiCnpjCadastrado;
         }
-    
+
 
         // Para Voo
-        public void InserirVoo(SqlConnection sqlConnection, string idVoo, char situacao, DateTime dataVoo, DateTime dataCadastro, string destino, 
+        public void InserirVoo(SqlConnection sqlConnection, string idVoo, char situacao, DateTime dataVoo, DateTime dataCadastro, string destino,
             int assentosOcupados, string inscricao)
         {
             SqlCommand cmd = new SqlCommand();
@@ -540,7 +540,7 @@ namespace POnTheFly2
             cmd.Parameters.AddWithValue("@Destino", System.Data.SqlDbType.VarChar).Value = destino;
             cmd.Parameters.AddWithValue("@AssentosOcupados", System.Data.SqlDbType.Int).Value = assentosOcupados;
             cmd.Parameters.AddWithValue("@Inscricao", System.Data.SqlDbType.VarChar).Value = inscricao;
-           
+
             cmd.Connection = sqlConnection;
             cmd.ExecuteNonQuery();
 
@@ -548,7 +548,7 @@ namespace POnTheFly2
         }
 
 
-        public void ConsultarVoo(SqlConnection sqlConnection, string idVoo )
+        public void ConsultarVoo(SqlConnection sqlConnection, string idVoo)
         {
             SqlCommand cmd = new SqlCommand();
 
@@ -574,10 +574,77 @@ namespace POnTheFly2
             }
         }
 
-        public void AtualizarVoo()
+        public void AtualizarVoo(SqlConnection sqlConnection, string idVoo, int op)
         {
+            if (op == 1)
+            {
+                Console.WriteLine("Situação: ");
+                string situacao = Console.ReadLine();
+
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandText = "UPDATE Voo SET Situacao = @Situacao WHERE IdVoo = @IdVoo;";
+                cmd.Parameters.AddWithValue("@IdVoo", System.Data.SqlDbType.VarChar).Value = idVoo;
+                cmd.Parameters.AddWithValue("@Situacao", System.Data.SqlDbType.VarChar).Value = situacao;
+
+                cmd.Connection = sqlConnection;
+                cmd.ExecuteNonQuery();
+
+                Console.WriteLine("Edição efetuada com sucesso!\n");
+            }
+
+            else if (op == 2)
+            {
+                Console.WriteLine("Data Voo: ");
+                DateTime dataVoo = DateTime.Parse(Console.ReadLine());
+
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandText = "UPDATE Voo SET DataVoo = @DataVoo WHERE IdVoo = @IdVoo;";
+                cmd.Parameters.AddWithValue("@IdVoo", System.Data.SqlDbType.VarChar).Value = idVoo;
+                cmd.Parameters.AddWithValue("@DataVoo", System.Data.SqlDbType.DateTime).Value = dataVoo;
+
+                cmd.Connection = sqlConnection;
+                cmd.ExecuteNonQuery();
+
+                Console.WriteLine("Edição efetuada com sucesso!\n");
+            }
+
+            else if (op == 3)
+            {
+                Console.WriteLine("Data de Cadastro: ");
+                DateTime dataCadastro = DateTime.Parse(Console.ReadLine());
+
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandText = "UPDATE Voo SET DataCadastro = @DataCadastro WHERE IdVoo= @IdVoo;";
+                cmd.Parameters.AddWithValue("@IdVoo", System.Data.SqlDbType.VarChar).Value = idVoo;
+                cmd.Parameters.AddWithValue("@DataCadastro", System.Data.SqlDbType.DateTime).Value = dataCadastro;
+
+                cmd.Connection = sqlConnection;
+                cmd.ExecuteNonQuery();
+
+                Console.WriteLine("Edição efetuada com sucesso!\n");
+            }
+
+            else if (op == 4)
+            {
+                Console.WriteLine("Sigla do Destino: ");
+                string destino = Console.ReadLine();
+
+                //Verificação existir destino
+
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandText = "UPDATE Voo SET Destino = @Destino WHERE IdVoo= @IdVoo;";
+                cmd.Parameters.AddWithValue("@IdVoo", System.Data.SqlDbType.VarChar).Value = idVoo;
+                cmd.Parameters.AddWithValue("@Destino", System.Data.SqlDbType.VarChar).Value = destino;
+
+                cmd.Connection = sqlConnection;
+                cmd.ExecuteNonQuery();
+
+                Console.WriteLine("Edição efetuada com sucesso!\n");
+            }
+
 
         }
+
 
         public bool ExistirVoo(SqlConnection sqlConnection, string idVoo)
         {
@@ -632,7 +699,7 @@ namespace POnTheFly2
             SqlCommand cmd = new SqlCommand();
 
             cmd.CommandText = "SELECT Sigla FROM Destino WHERE Sigla= @Destino";
-            cmd.Parameters.AddWithValue("@Destino", System.Data.SqlDbType.VarChar).Value = destino; 
+            cmd.Parameters.AddWithValue("@Destino", System.Data.SqlDbType.VarChar).Value = destino;
 
             cmd.Connection = sqlConnection;
             cmd.ExecuteNonQuery();
@@ -771,7 +838,7 @@ namespace POnTheFly2
                 Console.WriteLine("Edição efetuada com sucesso!");
             }
 
-     
+
         }
 
         public bool ExistirAeronave(SqlConnection sqlConnection, string inscricao)
@@ -806,9 +873,23 @@ namespace POnTheFly2
         }
 
         //Para Passagem 
-        public void InserirPassagem()
+        public void InserirPassagem(SqlConnection sqlConnection, string idPassagem, char situacao,
+        float valor, DateTime dataUltimaOp, string idVoo) //Não testado
         {
+            SqlCommand cmd = new SqlCommand();
 
+            cmd.CommandText = "INSERT INTO Passagem(IdPassagem,Situacao,Valor,DataUltimaOp,IdVenda,IdVoo)" +
+                " VALUES(@IdPassagem, @Situacao,@Valor,@DataUltimaOp,@IdVenda, @IdVoo);";
+            cmd.Parameters.AddWithValue("@IdPassagem", System.Data.SqlDbType.VarChar).Value = idPassagem;
+            cmd.Parameters.AddWithValue("@Situacao", System.Data.SqlDbType.Char).Value = situacao;
+            cmd.Parameters.AddWithValue("@Valor", System.Data.SqlDbType.Float).Value = valor;
+            cmd.Parameters.AddWithValue("@DataUltimaOp", System.Data.SqlDbType.DateTime).Value = dataUltimaOp;
+            cmd.Parameters.AddWithValue("@IdVoo", System.Data.SqlDbType.VarChar).Value = idVoo;
+
+            cmd.Connection = sqlConnection;
+            cmd.ExecuteNonQuery();
+
+            Console.WriteLine("Cadastro efetuado com sucesso!\n");
         }
 
         public void ConsultarPassagem()
@@ -816,14 +897,49 @@ namespace POnTheFly2
 
         }
 
+        public float ConsultarValorPassagem()
+        {   
+            
+            return 0;
+        }
+
+        public char ConsultarSituacaoPassagem()
+        {
+            return 'F';
+        }
         public void AtualizarPassagem()
         {
 
         }
 
-        public void ExistirPassagem()
+        public bool ExistirPassagem(SqlConnection sqlConnection, string idPassagem)
         {
+            SqlCommand cmd = new SqlCommand();
 
+            cmd.CommandText = "SELECT IdPassagem FROM Passagem WHERE IdPassagem= @IdPassagem";
+            cmd.Parameters.AddWithValue("@IdPassagem", System.Data.SqlDbType.VarChar).Value = idPassagem;
+
+            cmd.Connection = sqlConnection;
+            cmd.ExecuteNonQuery();
+
+            bool possuiIdPassagemCadastrado = false;
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+
+                while (reader.Read())
+                {
+                    if (reader.IsDBNull(0))
+                    {
+                        possuiIdPassagemCadastrado = false;
+                    }
+
+                    else
+                    {
+                        possuiIdPassagemCadastrado = true;
+                    }
+                }
+            }
+            return possuiIdPassagemCadastrado;
 
         }
 
@@ -849,6 +965,27 @@ namespace POnTheFly2
 
         }
 
+        public void ExibirPassageiro(SqlConnection sqlConnection, string cpf)
+        {
+            SqlCommand cmd = new SqlCommand();
+
+            cmd.CommandText = "SELECT Passageiro.Cpf, Passageiro.Nome, Passageiro.DataNascimento FROM Passageiro WHERE Cpf = @Cpf;";
+            cmd.Parameters.AddWithValue("@Cpf", System.Data.SqlDbType.VarChar).Value = cpf;
+
+            cmd.Connection = sqlConnection;
+            cmd.ExecuteNonQuery();
+
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    Console.WriteLine("Cpf: {0}", reader.GetString(0));
+                    Console.WriteLine("Nome: {0}", reader.GetString(1));
+                    Console.WriteLine("Data de Nascimento: {0}", reader.GetDateTime(2));
+
+                }
+            }
+        }
         //Para item venda 
 
         public void InserirItemVenda()

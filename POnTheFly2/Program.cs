@@ -254,7 +254,7 @@ namespace POnTheFly2
                             break;
                         case 2: voo.LocalizarVoo(sqlConnection, conexaoBanco);
                             break;
-                        case 3: voo.EditarVoo();
+                        case 3: voo.EditarVoo(sqlConnection, conexaoBanco);
                             break;
                         case 4: voo.ImprimirVoo();
                             break;
@@ -346,7 +346,7 @@ namespace POnTheFly2
 
                     switch (opPassagem)
                     {
-                        case 1: passagem.CadastrarPassagem();
+                        case 1: passagem.CadastrarPassagem(sqlConnection, conexaoBanco);
                             break;
                         case 2: passagem.LocalizarPassagem();
                             break;
@@ -382,7 +382,7 @@ namespace POnTheFly2
 
                     switch (opVenda)
                     {
-                        case 1: venda.CadastrarVenda();
+                        case 1: venda.CadastrarVenda(sqlConnection, conexaoBanco);
                             break;
                         case 2: venda.LocalizarVenda();
                             break;

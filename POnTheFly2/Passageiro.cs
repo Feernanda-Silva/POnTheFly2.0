@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace POnTheFly2
 {
-    internal class Passageiro
+    internal class Passageiro 
     {
 
         public string Cpf { get; set; }
@@ -25,7 +25,6 @@ namespace POnTheFly2
 
         public void CadastrarPassageiro(ConexaoBanco conexaoBanco, SqlConnection sqlConnection)
         {
-            Console.WriteLine("CADASTRO DE PASSAGEIRO");
             Console.WriteLine("Nome: ");
             this.Nome = Console.ReadLine();
 
@@ -80,7 +79,7 @@ namespace POnTheFly2
                 this.Situacao = char.Parse(Console.ReadLine());
             }
 
-            conexaoBanco.InserirPessoa(this.Cpf, this.Nome, this.DataNascimento, this.Sexo, 
+            conexaoBanco.InserirPassageiro(this.Cpf, this.Nome, this.DataNascimento, this.Sexo, 
                 this.DataUltimaCompra,this.DataCadastro, this.Situacao, sqlConnection); 
         }
 
@@ -97,7 +96,7 @@ namespace POnTheFly2
 
             else if (conexaoBanco.ExistirCpf(sqlConnection,Cpf) == true)
             {
-                conexaoBanco.ConsultarPessoa(sqlConnection, Cpf);
+                conexaoBanco.ConsultarPassageiro(sqlConnection, Cpf);
             }
 
         }
@@ -122,7 +121,7 @@ namespace POnTheFly2
                 Console.WriteLine("5-Data Cadastro");
                 Console.WriteLine("6- Situação");
                 int op = int.Parse(Console.ReadLine());
-                conexaoBanco.AtualizarPessoa(sqlConnection, cpf , op);
+                conexaoBanco.AtualizarPassageiro(sqlConnection, cpf , op);
             }
 
         }
