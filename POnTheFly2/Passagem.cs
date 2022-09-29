@@ -68,11 +68,21 @@ namespace POnTheFly2
         }
 
 
-
-
-        public void LocalizarPassagem()
+        public void LocalizarPassagem(SqlConnection sqlConnection, ConexaoBanco conexaoBanco)
         {
+            Console.WriteLine("IdPassagem: ");
+            this.IdPassagem = Console.ReadLine();
 
+            if (conexaoBanco.ExistirPassagem(sqlConnection, this.IdPassagem) == false)
+            {
+                Console.WriteLine("Esse IdPassagem não foi localizado!");
+
+            }
+
+            else if (conexaoBanco.ExistirPassagem(sqlConnection, this.IdPassagem) == true)
+            {
+                conexaoBanco.ConsultarPassagem(sqlConnection, IdPassagem);
+            }
         }
 
         public void EditarPassagem()

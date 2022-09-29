@@ -878,8 +878,8 @@ namespace POnTheFly2
         {
             SqlCommand cmd = new SqlCommand();
 
-            cmd.CommandText = "INSERT INTO Passagem(IdPassagem,Situacao,Valor,DataUltimaOp,IdVenda,IdVoo)" +
-                " VALUES(@IdPassagem, @Situacao,@Valor,@DataUltimaOp,@IdVenda, @IdVoo);";
+            cmd.CommandText = "INSERT INTO Passagem(IdPassagem,Situacao,Valor,DataUltimaOp,IdVoo)" +
+                " VALUES(@IdPassagem, @Situacao,@Valor,@DataUltimaOp, @IdVoo);";
             cmd.Parameters.AddWithValue("@IdPassagem", System.Data.SqlDbType.VarChar).Value = idPassagem;
             cmd.Parameters.AddWithValue("@Situacao", System.Data.SqlDbType.Char).Value = situacao;
             cmd.Parameters.AddWithValue("@Valor", System.Data.SqlDbType.Float).Value = valor;
@@ -892,9 +892,29 @@ namespace POnTheFly2
             Console.WriteLine("Cadastro efetuado com sucesso!\n");
         }
 
-        public void ConsultarPassagem()
+        public void ConsultarPassagem(SqlConnection sqlConnection, string idPassagem)
         {
+            SqlCommand cmd = new SqlCommand();
 
+            cmd.CommandText = "SELECT Passagem.IdPassagem,Passagem.Situacao,Passagem.Valor,Passagem.DataUltimaOp,Passagem.IdVoo FROM Passagem WHERE IdPassagem = @Idpassagem";
+
+            cmd.Parameters.AddWithValue("@IdPassagem", System.Data.SqlDbType.VarChar).Value = idPassagem;
+
+            cmd.Connection = sqlConnection;
+            cmd.ExecuteNonQuery();
+
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    Console.WriteLine("IdPassagem: {0}", reader.GetString(0));
+                    Console.WriteLine("Situação: {0}", reader.GetString(1));
+                    Console.WriteLine("Valor: {0}", reader.GetDouble(2));
+                    Console.WriteLine("Data Ultima Operação: {0}", reader.GetDateTime(3));
+                    Console.WriteLine("IdVoo: {0}", reader.GetString(4));
+
+                }
+            }
         }
 
         public float ConsultarValorPassagem()

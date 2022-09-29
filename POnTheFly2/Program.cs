@@ -348,7 +348,7 @@ namespace POnTheFly2
                     {
                         case 1: passagem.CadastrarPassagem(sqlConnection, conexaoBanco);
                             break;
-                        case 2: passagem.LocalizarPassagem();
+                        case 2: passagem.LocalizarPassagem(sqlConnection, conexaoBanco);
                             break;
                         case 3: passagem.EditarPassagem();
                             break;
