@@ -13,13 +13,13 @@ namespace POnTheFly2
             Passageiro passageiro = new Passageiro();
             Restritos restrito = new Restritos();
             CompanhiaAerea companhiaAerea = new CompanhiaAerea();
-            Bloqueado bloqueado = new Bloqueado();  
+            Bloqueado bloqueado = new Bloqueado();
             Voo voo = new Voo();
             Aeronave aeronave = new Aeronave();
-            Passagem passagem = new Passagem(); 
+            Passagem passagem = new Passagem();
             Venda venda = new Venda();
-            ItemVenda itemVenda = new ItemVenda();  
-            Destino destino = new Destino();    
+            ItemVenda itemVenda = new ItemVenda();
+            Destino destino = new Destino();
 
             MenuInicial();
 
@@ -108,16 +108,20 @@ namespace POnTheFly2
 
                     switch (opPassageiro)
                     {
-                        case 1: passageiro.CadastrarPassageiro(conexaoBanco, sqlConnection);
+                        case 1:
+                            passageiro.CadastrarPassageiro(conexaoBanco, sqlConnection);
                             break;
-                        case 2: passageiro.LocalizarPassageiro(conexaoBanco, sqlConnection);
+                        case 2:
+                            passageiro.LocalizarPassageiro(conexaoBanco, sqlConnection);
                             break;
-                        case 3: passageiro.EditarPassageiro(conexaoBanco, sqlConnection);
+                        case 3:
+                            passageiro.EditarPassageiro(conexaoBanco, sqlConnection);
                             break;
                         case 4:
                             MenuRestritos();
                             break;
-                        case 5: passageiro.ImprimirPassageiro();
+                        case 5:
+                            passageiro.ImprimirPassageiro(conexaoBanco, sqlConnection);
                             break;
                         case 6:
                             MenuInicial();
@@ -142,11 +146,14 @@ namespace POnTheFly2
 
                     switch (opRestritos)
                     {
-                        case 1: restrito.CadastrarRestrito(sqlConnection, conexaoBanco, passageiro);
+                        case 1:
+                            restrito.CadastrarRestrito(sqlConnection, conexaoBanco, passageiro);
                             break;
-                        case 2: restrito.LocalizarRestrito(sqlConnection, conexaoBanco);
+                        case 2:
+                            restrito.LocalizarRestrito(sqlConnection, conexaoBanco);
                             break;
-                        case 3: restrito.RetirarRestrito(sqlConnection, conexaoBanco);
+                        case 3:
+                            restrito.RetirarRestrito(sqlConnection, conexaoBanco);
                             break;
                         case 4:
                             MenuPassageiro();
@@ -180,13 +187,17 @@ namespace POnTheFly2
 
                     switch (opCia)
                     {
-                        case 1: companhiaAerea.CadastrarCia(conexaoBanco, sqlConnection);
+                        case 1:
+                            companhiaAerea.CadastrarCia(conexaoBanco, sqlConnection);
                             break;
-                        case 2: companhiaAerea.LocalizarCia(conexaoBanco, sqlConnection);
+                        case 2:
+                            companhiaAerea.LocalizarCia(conexaoBanco, sqlConnection);
                             break;
-                        case 3: companhiaAerea.EditarCia(conexaoBanco, sqlConnection);
+                        case 3:
+                            companhiaAerea.EditarCia(conexaoBanco, sqlConnection);
                             break;
-                        case 4: companhiaAerea.ImprimirCia();
+                        case 4:
+                            companhiaAerea.ImprimirCia();
                             break;
                         case 5:
                             MenuBloqueadas();
@@ -215,11 +226,14 @@ namespace POnTheFly2
 
                     switch (opBloq)
                     {
-                        case 1: bloqueado.CadastrarBloqueado(sqlConnection, conexaoBanco, companhiaAerea);
+                        case 1:
+                            bloqueado.CadastrarBloqueado(sqlConnection, conexaoBanco, companhiaAerea);
                             break;
-                        case 2: bloqueado.LocalizarBloqueado(sqlConnection, conexaoBanco);
+                        case 2:
+                            bloqueado.LocalizarBloqueado(sqlConnection, conexaoBanco);
                             break;
-                        case 3: bloqueado.RetirarBloqueado(sqlConnection, conexaoBanco);
+                        case 3:
+                            bloqueado.RetirarBloqueado(sqlConnection, conexaoBanco);
                             break;
                         case 4:
                             MenuPassageiro();
@@ -250,17 +264,23 @@ namespace POnTheFly2
 
                     switch (opVoo)
                     {
-                        case 1: voo.CadastrarVoo(sqlConnection, conexaoBanco);
+                        case 1:
+                            voo.CadastrarVoo(sqlConnection, conexaoBanco);
                             break;
-                        case 2: voo.LocalizarVoo(sqlConnection, conexaoBanco);
+                        case 2:
+                            voo.LocalizarVoo(sqlConnection, conexaoBanco);
                             break;
-                        case 3: voo.EditarVoo(sqlConnection, conexaoBanco);
+                        case 3:
+                            voo.EditarVoo(sqlConnection, conexaoBanco);
                             break;
-                        case 4: voo.ImprimirVoo();
+                        case 4:
+                            voo.ImprimirVoo();
                             break;
-                        case 5:  MenuDestino();
+                        case 5:
+                            MenuDestino();
                             break;
-                        case 6: MenuInicial();
+                        case 6:
+                            MenuInicial();
                             break;
                     }
 
@@ -269,7 +289,7 @@ namespace POnTheFly2
 
             void MenuDestino()
             {
-                int opDestino; 
+                int opDestino;
                 do
                 {
                     Console.WriteLine("--- Menu Destino ---");
@@ -283,13 +303,17 @@ namespace POnTheFly2
 
                     switch (opDestino)
                     {
-                        case 1: destino.CadastrarDestino(sqlConnection, conexaoBanco);
+                        case 1:
+                            destino.CadastrarDestino(sqlConnection, conexaoBanco);
                             break;
-                        case 2: destino.LocalizarDestino(sqlConnection, conexaoBanco);
+                        case 2:
+                            destino.LocalizarDestino(sqlConnection, conexaoBanco);
                             break;
-                        case 3: MenuVoo();
+                        case 3:
+                            MenuVoo();
                             break;
-                        case 4: MenuInicial();
+                        case 4:
+                            MenuInicial();
                             break;
                     }
 
@@ -312,13 +336,17 @@ namespace POnTheFly2
 
                     switch (opAeronave)
                     {
-                        case 1: aeronave.CadastrarAeronave(conexaoBanco, sqlConnection);
+                        case 1:
+                            aeronave.CadastrarAeronave(conexaoBanco, sqlConnection);
                             break;
-                        case 2: aeronave.LocalizarAeronave(conexaoBanco, sqlConnection);
+                        case 2:
+                            aeronave.LocalizarAeronave(conexaoBanco, sqlConnection);
                             break;
-                        case 3: aeronave.EditarAeronave(conexaoBanco, sqlConnection);
+                        case 3:
+                            aeronave.EditarAeronave(conexaoBanco, sqlConnection);
                             break;
-                        case 4: aeronave.ImprimirAeronave();
+                        case 4:
+                            aeronave.ImprimirAeronave();
                             break;
                         case 5:
                             MenuInicial();
@@ -346,13 +374,17 @@ namespace POnTheFly2
 
                     switch (opPassagem)
                     {
-                        case 1: passagem.CadastrarPassagem(sqlConnection, conexaoBanco);
+                        case 1:
+                            passagem.CadastrarPassagem(sqlConnection, conexaoBanco);
                             break;
-                        case 2: passagem.LocalizarPassagem(sqlConnection, conexaoBanco);
+                        case 2:
+                            passagem.LocalizarPassagem(sqlConnection, conexaoBanco);
                             break;
-                        case 3: passagem.EditarPassagem();
+                        case 3:
+                            passagem.EditarPassagem(sqlConnection, conexaoBanco);
                             break;
-                        case 4: passagem.ImprimirPassagem();
+                        case 4:
+                            passagem.ImprimirPassagem();
                             break;
                         case 5:
                             MenuInicial();
@@ -375,60 +407,33 @@ namespace POnTheFly2
                     Console.WriteLine("2-Localizar");
                     Console.WriteLine("3-Cancelar");
                     Console.WriteLine("4-Impressao por Registro");
-                    Console.WriteLine("5-Item venda");
-                    Console.WriteLine("6-Menu Inicial");
+                    Console.WriteLine("5-Menu Inicial");
 
                     opVenda = int.Parse(Console.ReadLine());
 
                     switch (opVenda)
                     {
-                        case 1: venda.CadastrarVenda(sqlConnection, conexaoBanco);
+                        case 1:
+                            venda.CadastrarVenda(sqlConnection, conexaoBanco);
                             break;
-                        case 2: venda.LocalizarVenda();
+                        case 2:
+                            venda.LocalizarVenda();
                             break;
-                        case 3: venda.CancelarVenda();
+                        case 3:
+                            venda.CancelarVenda();
                             break;
-                        case 4: venda.ImprimirVenda();
+                        case 4:
+                            venda.ImprimirVenda();
                             break;
                         case 5:
-                            MenuItemVenda();
+                            MenuInicial();
                             break;
                     }
 
                 } while (opVenda > 0 && opVenda < 6);
             }
 
-            void MenuItemVenda()
-            {
-                int opItemVenda;
-
-                do
-                {
-                    Console.WriteLine("---Menu Item Venda---");
-                    Console.WriteLine("Digite a opção desejada: ");
-                    Console.WriteLine("1-Cadastrar");
-                    Console.WriteLine("2-Localizar");
-                    Console.WriteLine("3-Editar");
-                    Console.WriteLine("4- Menu Venda");
-
-                    opItemVenda = int.Parse(Console.ReadLine());
-
-                    switch (opItemVenda)
-                    {
-                        case 1: itemVenda.CadastrarItemVenda();
-                            break;
-                        case 2: itemVenda.LocalizarItemVenda();
-                            break;
-                        case 3: itemVenda.EditarItemVenda(); 
-                            break;
-                        case 4:
-                            MenuVenda();
-                            break;
-
-                    }
-
-                } while (opItemVenda > 0 && opItemVenda < 5);
-            }
         }
     }
 }
+

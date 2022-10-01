@@ -173,6 +173,52 @@ namespace POnTheFly2
 
         }
 
+        public void ImprimirPassageiro(SqlConnection sqlConnection,int pagina )
+        {
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandText = "SELECT * FROM Passageiro ORDER BY Cpf OFFSET @Pagina ROWS FETCH NEXT 1 ROWS ONLY;";
+            cmd.Parameters.AddWithValue("@Pagina", System.Data.SqlDbType.VarChar).Value = pagina;
+            
+            cmd.Connection = sqlConnection;
+            cmd.ExecuteNonQuery();
+
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    Console.WriteLine("Cpf: {0}", reader.GetString(0));
+                    Console.WriteLine("Nome: {0}", reader.GetString(1));
+                    Console.WriteLine("Situação: {0}", reader.GetString(2));
+                    Console.WriteLine("Data Cadastro: {0}", reader.GetDateTime(3));
+                    Console.WriteLine("Ultima Compra: {0}", reader.GetDateTime(4));
+                    Console.WriteLine("Sexo: {0}", reader.GetString(5));
+                    Console.WriteLine("Data Nascimento: {0}\n", reader.GetDateTime(6));
+
+                }
+            }
+        }
+
+        public int ContagemPassageiros(SqlConnection sqlConnection)
+        {
+
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandText = "SELECT COUNT (*) FROM Passageiro";
+            cmd.Connection = sqlConnection;
+            cmd.ExecuteNonQuery();
+
+            int countPassageiros = 0;
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    countPassageiros = reader.GetInt32(0);
+                    
+                }
+            }
+
+            return countPassageiros;
+        }
+
         //Para Pessoas Restritas 
         public void InserirRestrito(SqlConnection sqlConnection, string cpf)
         {
@@ -917,18 +963,108 @@ namespace POnTheFly2
             }
         }
 
-        public float ConsultarValorPassagem()
-        {   
-            
-            return 0;
+        public float ConsultarValorPassagem(SqlConnection sqlConnection, string idPassagem)
+        {
+            float valorPassagem = 0;
+            SqlCommand cmd = new SqlCommand();
+
+            cmd.CommandText = "SELECT Passagem.Valor FROM Passagem WHERE IdPassagem = @IdPassagem;";
+            cmd.Parameters.AddWithValue("@IdPassagem", System.Data.SqlDbType.VarChar).Value = idPassagem;
+
+            cmd.Connection = sqlConnection;
+            cmd.ExecuteNonQuery();
+
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    valorPassagem = (float)reader.GetDouble(0);
+                
+                }
+            }
+
+            return valorPassagem;
+
         }
 
         public char ConsultarSituacaoPassagem()
         {
             return 'F';
         }
-        public void AtualizarPassagem()
+        public void AtualizarPassagem(SqlConnection sqlConnection, string idPassagem, int op)
         {
+            if (op == 1)
+            {
+                Console.WriteLine("Situação: ");
+                char situacao = Char.Parse(Console.ReadLine());
+
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandText = "UPDATE Passagem SET Situacao= @Situacao WHERE IdPassagem= @IdPassagem;";
+                cmd.Parameters.AddWithValue("@IdPassagem", System.Data.SqlDbType.VarChar).Value = idPassagem;
+                cmd.Parameters.AddWithValue("@Situacao", System.Data.SqlDbType.Char).Value = situacao;
+
+                cmd.Connection = sqlConnection;
+                cmd.ExecuteNonQuery();
+
+                Console.WriteLine("Edição efetuada com sucesso!");
+            }
+
+
+            else if (op == 2)
+            {
+                Console.WriteLine("Valor: ");
+                float valor = float.Parse(Console.ReadLine());
+
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandText = "UPDATE Passagem SET Valor= @Valor WHERE IdPassagem= @IdPassagem;";
+                cmd.Parameters.AddWithValue("@IdPassagem", System.Data.SqlDbType.VarChar).Value = idPassagem;
+                cmd.Parameters.AddWithValue("@Valor", System.Data.SqlDbType.DateTime).Value = valor;
+
+                cmd.Connection = sqlConnection;
+                cmd.ExecuteNonQuery();
+
+                Console.WriteLine("Edição efetuada com sucesso!");
+            }
+
+            else if (op == 3)
+            {
+                Console.WriteLine("Data Ultima Operação: ");
+                DateTime dataUltimaOp = DateTime.Parse(Console.ReadLine());
+
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandText = "UPDATE Passagem SET DataUltimaOp = @DataUltimaOp WHERE IdPassagem= @IdPassagem;";
+                cmd.Parameters.AddWithValue("@IdPassagem", System.Data.SqlDbType.VarChar).Value = idPassagem;
+                cmd.Parameters.AddWithValue("@DataUltimaOp", System.Data.SqlDbType.DateTime).Value = dataUltimaOp;
+
+                cmd.Connection = sqlConnection;
+                cmd.ExecuteNonQuery();
+
+                Console.WriteLine("Edição efetuada com sucesso!");
+            }
+
+            else if (op == 4)
+            {
+                Console.WriteLine("IdVoo: ");
+                string idVoo = Console.ReadLine();
+
+                if (ExistirVoo(sqlConnection, idVoo) == false)
+                {
+                    Console.WriteLine("IdVoo não existe, impossivel editar");
+                }
+
+                else
+                {
+                    SqlCommand cmd = new SqlCommand();
+                    cmd.CommandText = "UPDATE Passagem SET IdVoo= @IdVoo WHERE IdPassagem = @IdPassagem;";
+                    cmd.Parameters.AddWithValue("@IdPassagem", System.Data.SqlDbType.VarChar).Value = idPassagem;
+                    cmd.Parameters.AddWithValue("@IdVoo", System.Data.SqlDbType.DateTime).Value = idVoo;
+
+                    cmd.Connection = sqlConnection;
+                    cmd.ExecuteNonQuery();
+
+                    Console.WriteLine("Edição efetuada com sucesso!");
+                }
+            }
 
         }
 
@@ -964,8 +1100,20 @@ namespace POnTheFly2
         }
 
         //Para Venda
-        public void InserirVenda()
+        public int InserirVenda(SqlConnection sqlConnection, DateTime dataVenda, float valorTotal, string cpf)
         {
+            int idVenda = 0;
+
+            SqlCommand cmd = new SqlCommand();
+
+            cmd.CommandText = "INSERT INTO Venda(DataVenda,ValorTotal,Cpf) OUTPUT INSERTED.IdVenda VALUES(@DataVenda, @ValorTotal, @CPF);";
+            cmd.Parameters.AddWithValue("@DataVenda", System.Data.SqlDbType.DateTime).Value = dataVenda;
+            cmd.Parameters.AddWithValue("@ValorTotal", System.Data.SqlDbType.Float).Value = valorTotal;
+            cmd.Parameters.AddWithValue("@Cpf", System.Data.SqlDbType.VarChar).Value = cpf;
+
+            cmd.Connection = sqlConnection;
+            idVenda = (int)cmd.ExecuteScalar();
+            return idVenda;
 
         }
 
@@ -974,16 +1122,11 @@ namespace POnTheFly2
 
         }
 
-        public void AtualizarVenda()
+        public void InserirItemVenda()
         {
 
         }
 
-        public void ExistirVenda()
-        {
-
-
-        }
 
         public void ExibirPassageiro(SqlConnection sqlConnection, string cpf)
         {
@@ -1008,15 +1151,18 @@ namespace POnTheFly2
         }
         //Para item venda 
 
-        public void InserirItemVenda()
+        public void InserirItemVenda(SqlConnection sqlConnection, int idVenda, float valorUnitario, string idPassagem)
         {
 
+            SqlCommand cmd = new SqlCommand();
+
+            cmd.CommandText = "INSERT INTO ItemVenda(IdVenda,ValorUnitario,IdPassagem) VALUES(@IdVenda, @ValorUnitario, @IdPassagem);";
+            cmd.Parameters.AddWithValue("@IdVenda", System.Data.SqlDbType.DateTime).Value = idVenda;
+            cmd.Parameters.AddWithValue("@ValorUnitario", System.Data.SqlDbType.Float).Value = valorUnitario;
+            cmd.Parameters.AddWithValue("@IdPassagem", System.Data.SqlDbType.VarChar).Value = idPassagem;
+
+            cmd.Connection = sqlConnection;
+            cmd.ExecuteNonQuery();
         }
-
-        public void ConsultarItemVenda()
-        {
-
-        }
-
     }
 }

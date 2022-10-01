@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace POnTheFly2
 {
-    internal class Passageiro 
+    internal class Passageiro
     {
 
         public string Cpf { get; set; }
@@ -79,8 +79,8 @@ namespace POnTheFly2
                 this.Situacao = char.Parse(Console.ReadLine());
             }
 
-            conexaoBanco.InserirPassageiro(this.Cpf, this.Nome, this.DataNascimento, this.Sexo, 
-                this.DataUltimaCompra,this.DataCadastro, this.Situacao, sqlConnection); 
+            conexaoBanco.InserirPassageiro(this.Cpf, this.Nome, this.DataNascimento, this.Sexo,
+                this.DataUltimaCompra, this.DataCadastro, this.Situacao, sqlConnection);
         }
 
 
@@ -94,7 +94,7 @@ namespace POnTheFly2
                 Console.WriteLine("CPF não localizado!");
             }
 
-            else if (conexaoBanco.ExistirCpf(sqlConnection,Cpf) == true)
+            else if (conexaoBanco.ExistirCpf(sqlConnection, Cpf) == true)
             {
                 conexaoBanco.ConsultarPassageiro(sqlConnection, Cpf);
             }
@@ -107,7 +107,7 @@ namespace POnTheFly2
             string cpf = Console.ReadLine();
 
             if (conexaoBanco.ExistirCpf(sqlConnection, cpf) == false)
-            {   
+            {
                 Console.WriteLine("CPF não localizado!");
             }
 
@@ -121,14 +121,43 @@ namespace POnTheFly2
                 Console.WriteLine("5-Data Cadastro");
                 Console.WriteLine("6- Situação");
                 int op = int.Parse(Console.ReadLine());
-                conexaoBanco.AtualizarPassageiro(sqlConnection, cpf , op);
+                conexaoBanco.AtualizarPassageiro(sqlConnection, cpf, op);
             }
 
         }
 
-        public void ImprimirPassageiro() //Por Registro: Anterior, atual, próximo
+        public void ImprimirPassageiro(ConexaoBanco conexaoBanco, SqlConnection sqlConnection) //Por Registro: Anterior, atual, próximo
         {
+            int opc;
+            int pagina = 0;
 
+            do
+            {
+
+                Console.WriteLine("1-Primeiro");
+                Console.WriteLine("2-Próximo");
+                Console.WriteLine("3-Anterior");
+                Console.WriteLine("4-Ultimo");
+                opc = int.Parse(Console.ReadLine());
+
+                switch (opc)
+                {
+                    case 1:
+                        pagina = 0; //por posição
+                        break;
+                    case 2:
+                        pagina = pagina + 1;
+                        break;
+                    case 3:
+                        pagina = pagina - 1;
+                        break;
+                    case 4:  pagina = conexaoBanco.ContagemPassageiros(sqlConnection)-1;
+                        break;
+                }
+
+                conexaoBanco.ImprimirPassageiro(sqlConnection, pagina);
+
+            } while (opc > 0 && opc < 5);
         }
 
         public bool ValidarCpf(string cpf) //Numero de campos

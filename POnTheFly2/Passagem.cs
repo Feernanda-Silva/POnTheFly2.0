@@ -85,9 +85,27 @@ namespace POnTheFly2
             }
         }
 
-        public void EditarPassagem()
+        public void EditarPassagem(SqlConnection sqlConnection, ConexaoBanco conexaoBanco)
         {
+            Console.WriteLine("Digite o IdPassagem: ");
+            this.IdPassagem = Console.ReadLine();
 
+            if (conexaoBanco.ExistirPassagem(sqlConnection, this.IdPassagem) == false)
+            {
+                Console.WriteLine("IdPassagem não localizado!");
+            }
+
+            else if (conexaoBanco.ExistirPassagem(sqlConnection, this.IdPassagem) == true)
+            {
+                Console.WriteLine("Escolha o campo para editar: ");
+                Console.WriteLine("1-Situação");
+                Console.WriteLine("2-Valor");
+                Console.WriteLine("3-Data Ultima Operação");
+                Console.WriteLine("4-IdVoo");
+
+                int op = int.Parse(Console.ReadLine());
+                conexaoBanco.AtualizarPassagem(sqlConnection, this.IdPassagem, op);
+            }
         }
 
         public void ImprimirPassagem()

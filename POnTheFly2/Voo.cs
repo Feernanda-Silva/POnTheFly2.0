@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace POnTheFly2
 {
-    internal class Voo //Editar ainda não testado 
+    internal class Voo 
     {
         public string IdVoo { get; set; }
         public char Situacao { get; set; }
@@ -84,10 +84,8 @@ namespace POnTheFly2
                 this.Situacao = char.Parse(Console.ReadLine());
             }
 
-            //Assentos Ocupados com base na Passagem vendida
 
             conexaoBanco.InserirVoo(sqlConnection, this.IdVoo, this.Situacao, this.DataVoo, this.DataCadastro, this.Destino, this.AssentosOcupados, this.Inscricao);
-
 
         }
 
@@ -113,12 +111,12 @@ namespace POnTheFly2
             Console.WriteLine("Digite o IdVoo: ");
             this.IdVoo = Console.ReadLine();
 
-            if (conexaoBanco.ExistirCnpj(sqlConnection, this.IdVoo) == false)
+            if (conexaoBanco.ExistirVoo(sqlConnection, this.IdVoo) == false)
             {
                 Console.WriteLine("IdVoo não localizado!");
             }
 
-            else if (conexaoBanco.ExistirCnpj(sqlConnection, this.IdVoo) == true)
+            else if (conexaoBanco.ExistirVoo(sqlConnection, this.IdVoo) == true)
             {
                 Console.WriteLine("Escolha o campo para editar: ");
                 Console.WriteLine("1-Situação");
