@@ -197,7 +197,7 @@ namespace POnTheFly2
                             companhiaAerea.EditarCia(conexaoBanco, sqlConnection);
                             break;
                         case 4:
-                            companhiaAerea.ImprimirCia();
+                            companhiaAerea.ImprimirCia(conexaoBanco, sqlConnection);
                             break;
                         case 5:
                             MenuBloqueadas();

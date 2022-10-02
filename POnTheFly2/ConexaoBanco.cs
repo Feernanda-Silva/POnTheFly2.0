@@ -234,7 +234,6 @@ namespace POnTheFly2
             Console.WriteLine("Cadastro efetuado com sucesso!\n");
         }
 
-
         public void ConsultarRestrito(SqlConnection sqlConnection, string cpf)
         {
             SqlCommand cmd = new SqlCommand();
@@ -298,8 +297,6 @@ namespace POnTheFly2
             return possuiCpfCadastrado;
         }
 
-
-
         public bool ExistirCpf(SqlConnection sqlConnection, string cpf) //Se já existe no banco 
         {
             SqlCommand cmd = new SqlCommand();
@@ -329,7 +326,6 @@ namespace POnTheFly2
             }
             return possuiCpfCadastrado;
         }
-
 
         //Para Companhia Aerea
         public void InserirCia(SqlConnection sqlConnection, string cnpj, string razaoSocial,
@@ -373,8 +369,6 @@ namespace POnTheFly2
                     Console.WriteLine("Data Cadastro: {0}", reader.GetDateTime(3));
                     Console.WriteLine("Ultima Voo: {0}", reader.GetDateTime(4));
                     Console.WriteLine("Situação: {0}\n", reader.GetString(5));
-
-
                 }
             }
         }
@@ -462,7 +456,49 @@ namespace POnTheFly2
 
 
         }
+        
+        public int ContarCia (SqlConnection sqlConnection)
+        {
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandText = "SELECT COUNT (*) FROM CompanhiaAerea";
+            cmd.Connection = sqlConnection;
+            cmd.ExecuteNonQuery();
 
+            int countCia = 0;
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    countCia = reader.GetInt32(0);
+
+                }
+            }
+
+            return countCia;
+        }
+
+        public void ImprimirCia (SqlConnection sqlConnection, int pagina)
+        {
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandText = "SELECT * FROM CompanhiaAerea ORDER BY Cnpj OFFSET @Pagina ROWS FETCH NEXT 1 ROWS ONLY;";
+            cmd.Parameters.AddWithValue("@Pagina", System.Data.SqlDbType.VarChar).Value = pagina;
+
+            cmd.Connection = sqlConnection;
+            cmd.ExecuteNonQuery();
+
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    Console.WriteLine("Cnpj: {0}", reader.GetString(0));
+                    Console.WriteLine("Razao Social: {0}", reader.GetString(1));
+                    Console.WriteLine("DataAbertura: {0}", reader.GetDateTime(2));
+                    Console.WriteLine("Data Cadastro: {0}", reader.GetDateTime(3));
+                    Console.WriteLine("Ultima Voo: {0}", reader.GetDateTime(4));
+                    Console.WriteLine("Situação: {0}\n", reader.GetString(5));
+                }
+            }
+        }
         //Para Companhia Aerea Bloqueadas
         public void InserirBloqueado(SqlConnection sqlConnection, string Cnpj)
         {

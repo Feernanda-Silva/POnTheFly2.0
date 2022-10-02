@@ -78,8 +78,7 @@ namespace POnTheFly2
             }
             
         }
-    
-
+   
         public void LocalizarCia( ConexaoBanco conexaoBanco, SqlConnection sqlConnection)
         {
             Console.WriteLine("Digite o CNPJ da Companhia Aérea: ");
@@ -123,9 +122,39 @@ namespace POnTheFly2
             }
         }
 
-        public void ImprimirCia()
+        public void ImprimirCia(ConexaoBanco conexaoBanco, SqlConnection sqlConnection)
         {
+            int opc;
+            int pagina = 0;
 
+            do
+            {
+
+                Console.WriteLine("1-Primeiro");
+                Console.WriteLine("2-Próximo");
+                Console.WriteLine("3-Anterior");
+                Console.WriteLine("4-Ultimo");
+                opc = int.Parse(Console.ReadLine());
+
+                switch (opc)
+                {
+                    case 1:
+                        pagina = 0; //por posição
+                        break;
+                    case 2:
+                        pagina = pagina + 1;
+                        break;
+                    case 3:
+                        pagina = pagina - 1;
+                        break;
+                    case 4:
+                        pagina = conexaoBanco.ContarCia(sqlConnection) - 1;
+                        break;
+                }
+
+                conexaoBanco.ImprimirCia(sqlConnection, pagina);
+
+            } while (opc > 0 && opc < 5);
         }
 
         public bool ValidarCnpj(string cnpj)
@@ -176,9 +205,6 @@ namespace POnTheFly2
             digito = digito + resto.ToString();
             return cnpj.EndsWith(digito);
         }
-
-
-
 
     }
 }
