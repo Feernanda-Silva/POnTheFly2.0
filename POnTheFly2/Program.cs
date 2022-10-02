@@ -274,7 +274,7 @@ namespace POnTheFly2
                             voo.EditarVoo(sqlConnection, conexaoBanco);
                             break;
                         case 4:
-                            voo.ImprimirVoo();
+                            voo.ImprimirVoo(sqlConnection, conexaoBanco);
                             break;
                         case 5:
                             MenuDestino();

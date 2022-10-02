@@ -757,6 +757,7 @@ namespace POnTheFly2
             }
             return possuiIdVooCadastrado;
         }
+
         public void InserirDestino(SqlConnection sqlConnection, string sigla, string nome)
         {
             SqlCommand cmd = new SqlCommand();
@@ -771,11 +772,54 @@ namespace POnTheFly2
             Console.WriteLine("Cadastro efetuado com sucesso!");
         }
 
+        public int ContarVoo(SqlConnection sqlConnection)
+        {
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandText = "SELECT COUNT (*) FROM Voo";
+            cmd.Connection = sqlConnection;
+            cmd.ExecuteNonQuery();
+
+            int countVoo = 0;
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    countVoo = reader.GetInt32(0);
+
+                }
+            }
+
+            return countVoo;
+        }
+
+        public void ImprimirVoo(SqlConnection sqlConnection, int pagina)
+        {
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandText = "SELECT * FROM Voo ORDER BY Inscricao OFFSET @Pagina ROWS FETCH NEXT 1 ROWS ONLY;";
+            cmd.Parameters.AddWithValue("@Pagina", System.Data.SqlDbType.VarChar).Value = pagina;
+
+            cmd.Connection = sqlConnection;
+            cmd.ExecuteNonQuery();
+
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    Console.WriteLine("IdVoo: {0}", reader.GetString(0));
+                    Console.WriteLine("Situação: {0}", reader.GetString(1));
+                    Console.WriteLine("Data Voo: {0}", reader.GetDateTime(2));
+                    Console.WriteLine("Data Cadastro: {0}", reader.GetDateTime(3));
+                    Console.WriteLine("Destino: {0}", reader.GetString(4));
+                    Console.WriteLine("Assentos Ocupados: {0}", reader.GetInt32(5));
+                    Console.WriteLine("Inscrição: {0}\n", reader.GetString(6));
+                }
+            }
+        }
+
         public void ConsultarDestino(SqlConnection sqlConnection, string sigla)
         {
 
         }
-
         public bool ExistirDestino(SqlConnection sqlConnection, string destino)
         {
             SqlCommand cmd = new SqlCommand();
