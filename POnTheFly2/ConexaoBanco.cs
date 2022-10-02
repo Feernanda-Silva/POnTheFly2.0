@@ -1236,6 +1236,7 @@ namespace POnTheFly2
                 }
             }
         }
+
         public bool ExistirPassagem(SqlConnection sqlConnection, string idPassagem)
         {
             SqlCommand cmd = new SqlCommand();
@@ -1362,6 +1363,7 @@ namespace POnTheFly2
 
             return countVenda;
         }
+
         public void ImprimirVenda(SqlConnection sqlConnection, int pagina)
         {
             SqlCommand cmd = new SqlCommand();
@@ -1383,6 +1385,39 @@ namespace POnTheFly2
             }
         }
 
+        public void EditarSituacao(SqlConnection sqlConnection, string idPassagem, int op)
+        {
+            if (op == 1)
+            {
+
+                char situacao = 'R';
+
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandText = "UPDATE Passagem SET Situacao= @Situacao WHERE IdPassagem= @IdPassagem;";
+                cmd.Parameters.AddWithValue("@IdPassagem", System.Data.SqlDbType.VarChar).Value = idPassagem;
+                cmd.Parameters.AddWithValue("@Situacao", System.Data.SqlDbType.Char).Value = situacao;
+
+                cmd.Connection = sqlConnection;
+                cmd.ExecuteNonQuery();
+
+                Console.WriteLine("Edição efetuada com sucesso!");
+            }
+
+            else if (op == 2)
+            {
+                char situacao = 'P';
+
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandText = "UPDATE Passagem SET Situacao= @Situacao WHERE IdPassagem= @IdPassagem;";
+                cmd.Parameters.AddWithValue("@IdPassagem", System.Data.SqlDbType.VarChar).Value = idPassagem;
+                cmd.Parameters.AddWithValue("@Situacao", System.Data.SqlDbType.Char).Value = situacao;
+
+                cmd.Connection = sqlConnection;
+                cmd.ExecuteNonQuery();
+
+                Console.WriteLine("Edição efetuada com sucesso!");
+            }
+        }
 
         public void ExibirPassageiro(SqlConnection sqlConnection, string cpf)
         {

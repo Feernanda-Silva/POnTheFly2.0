@@ -62,7 +62,18 @@ namespace POnTheFly2
 
             //Assentos Ocupados
 
-            //UPDATE Situação da passagem (Paga/ Reservada) 
+            Console.WriteLine("Escolha a opção desejada!");
+            Console.WriteLine("1-Reservar passagem");
+            Console.WriteLine("2-Pagar passagem"); 
+            int op = int.Parse(Console.ReadLine());
+
+            while (op != 1 && op !=2)
+            {
+                Console.WriteLine("Digite uma opção valida");
+                op = int.Parse(Console.ReadLine()); 
+            }
+
+            conexaoBanco.EditarSituacao(sqlConnection, idPassagem, op); 
         }
 
         public void LocalizarVenda(SqlConnection sqlConnection, ConexaoBanco conexaoBanco)
