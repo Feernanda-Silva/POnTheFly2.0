@@ -820,6 +820,7 @@ namespace POnTheFly2
         {
 
         }
+
         public bool ExistirDestino(SqlConnection sqlConnection, string destino)
         {
             SqlCommand cmd = new SqlCommand();
@@ -1284,14 +1285,62 @@ namespace POnTheFly2
 
         }
 
-        public void ConsultarVenda()
+        public void ConsultarVenda(SqlConnection sqlConnection, int idVenda)
         {
+            SqlCommand cmd = new SqlCommand();
 
+            cmd.CommandText = "SELECT Venda.IdVenda,Venda.DataVenda,Venda.ValorTotal,Venda.Cpf  FROM Venda WHERE IdVenda = @IdVenda";
+
+            cmd.Parameters.AddWithValue("@IdVenda", System.Data.SqlDbType.Int).Value = idVenda;
+
+            cmd.Connection = sqlConnection;
+            cmd.ExecuteNonQuery();
+
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    Console.WriteLine("IdVenda: {0}", reader.GetInt32(0));
+                    Console.WriteLine("Data Venda: {0}", reader.GetDateTime(1));
+                    Console.WriteLine("Valor Total: {0}", reader.GetDouble(2));
+                    Console.WriteLine("Cpf: {0}", reader.GetString(3));
+                }
+            }
         }
 
         public void InserirItemVenda()
         {
 
+        }
+
+        public bool ExistirVenda(SqlConnection sqlConnection, int idVenda)
+        {
+            SqlCommand cmd = new SqlCommand();
+
+            cmd.CommandText = "SELECT IdVenda FROM Venda WHERE IdVenda= @IdVenda";
+            cmd.Parameters.AddWithValue("@IdVenda", System.Data.SqlDbType.VarChar).Value = idVenda;
+
+            cmd.Connection = sqlConnection;
+            cmd.ExecuteNonQuery();
+
+            bool possuiIdVendaCadastrado = false;
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+
+                while (reader.Read())
+                {
+                    if (reader.IsDBNull(0))
+                    {
+                        possuiIdVendaCadastrado = false;
+                    }
+
+                    else
+                    {
+                        possuiIdVendaCadastrado = true;
+                    }
+                }
+            }
+            return possuiIdVendaCadastrado;
         }
 
 

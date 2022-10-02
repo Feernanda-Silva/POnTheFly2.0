@@ -402,9 +402,8 @@ namespace POnTheFly2
                     Console.WriteLine("Digite a opção desejada: ");
                     Console.WriteLine("1-Cadastrar");
                     Console.WriteLine("2-Localizar");
-                    Console.WriteLine("3-Cancelar");
-                    Console.WriteLine("4-Impressao por Registro");
-                    Console.WriteLine("5-Menu Inicial");
+                    Console.WriteLine("3-Impressao por Registro");
+                    Console.WriteLine("4-Menu Inicial");
 
                     opVenda = int.Parse(Console.ReadLine());
 
@@ -414,20 +413,17 @@ namespace POnTheFly2
                             venda.CadastrarVenda(sqlConnection, conexaoBanco);
                             break;
                         case 2:
-                            venda.LocalizarVenda();
+                            venda.LocalizarVenda(sqlConnection, conexaoBanco);
                             break;
                         case 3:
-                            venda.CancelarVenda();
-                            break;
-                        case 4:
                             venda.ImprimirVenda();
                             break;
-                        case 5:
+                        case 4:
                             MenuInicial();
                             break;
                     }
 
-                } while (opVenda > 0 && opVenda < 6);
+                } while (opVenda > 0 && opVenda < 5);
             }
 
         }

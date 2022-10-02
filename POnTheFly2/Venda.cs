@@ -65,14 +65,20 @@ namespace POnTheFly2
             //UPDATE Situação da passagem (Paga/ Reservada) 
         }
 
-        public void LocalizarVenda()
+        public void LocalizarVenda(SqlConnection sqlConnection, ConexaoBanco conexaoBanco)
         {
+            Console.WriteLine("Digite o IdVenda: ");
+            int idVenda = int.Parse(Console.ReadLine());
 
-        }
+            if (conexaoBanco.ExistirVenda(sqlConnection, idVenda) == false)
+            {
+                Console.WriteLine("IdVenda não localizado!");
+            }
 
-        public void CancelarVenda()
-        {
-
+            else if (conexaoBanco.ExistirVenda(sqlConnection, idVenda) == true)
+            {
+                conexaoBanco.ConsultarVenda(sqlConnection, idVenda);
+            }
         }
 
         public void ImprimirVenda()
