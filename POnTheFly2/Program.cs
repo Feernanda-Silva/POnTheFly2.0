@@ -416,7 +416,7 @@ namespace POnTheFly2
                             venda.LocalizarVenda(sqlConnection, conexaoBanco);
                             break;
                         case 3:
-                            venda.ImprimirVenda();
+                            venda.ImprimirVenda(sqlConnection, conexaoBanco);
                             break;
                         case 4:
                             MenuInicial();

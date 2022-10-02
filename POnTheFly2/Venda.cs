@@ -81,9 +81,39 @@ namespace POnTheFly2
             }
         }
 
-        public void ImprimirVenda()
+        public void ImprimirVenda(SqlConnection sqlConnection, ConexaoBanco conexaoBanco)
         {
+            int opc;
+            int pagina = 0;
 
+            do
+            {
+
+                Console.WriteLine("1-Primeiro");
+                Console.WriteLine("2-Próximo");
+                Console.WriteLine("3-Anterior");
+                Console.WriteLine("4-Ultimo");
+                opc = int.Parse(Console.ReadLine());
+
+                switch (opc)
+                {
+                    case 1:
+                        pagina = 0; //por posição
+                        break;
+                    case 2:
+                        pagina = pagina + 1;
+                        break;
+                    case 3:
+                        pagina = pagina - 1;
+                        break;
+                    case 4:
+                        pagina = conexaoBanco.ContarVenda(sqlConnection) - 1;
+                        break;
+                }
+
+                conexaoBanco.ImprimirVenda(sqlConnection, pagina);
+
+            } while (opc > 0 && opc < 5);
         }
 
     }

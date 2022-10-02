@@ -1343,6 +1343,46 @@ namespace POnTheFly2
             return possuiIdVendaCadastrado;
         }
 
+        public int ContarVenda(SqlConnection sqlConnection)
+        {
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandText = "SELECT COUNT (*) FROM Venda";
+            cmd.Connection = sqlConnection;
+            cmd.ExecuteNonQuery();
+
+            int countVenda = 0;
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    countVenda = reader.GetInt32(0);
+
+                }
+            }
+
+            return countVenda;
+        }
+        public void ImprimirVenda(SqlConnection sqlConnection, int pagina)
+        {
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandText = "SELECT * FROM Venda ORDER BY IdVenda OFFSET @Pagina ROWS FETCH NEXT 1 ROWS ONLY;";
+            cmd.Parameters.AddWithValue("@Pagina", System.Data.SqlDbType.VarChar).Value = pagina;
+
+            cmd.Connection = sqlConnection;
+            cmd.ExecuteNonQuery();
+
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    Console.WriteLine("IdVenda: {0}", reader.GetInt32(0));
+                    Console.WriteLine("Data Venda: {0}", reader.GetDateTime(1));
+                    Console.WriteLine("Valor Total: {0}", reader.GetDouble(2));
+                    Console.WriteLine("Cpf: {0}", reader.GetString(3));
+                }
+            }
+        }
+
 
         public void ExibirPassageiro(SqlConnection sqlConnection, string cpf)
         {
