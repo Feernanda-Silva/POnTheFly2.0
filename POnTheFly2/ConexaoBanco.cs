@@ -9,7 +9,6 @@ namespace POnTheFly2
 {
     internal class ConexaoBanco
     {
-
         string conexaosql = "Data Source=localhost;Initial Catalog=OnTheFly;User Id=sa;Password=fernanda123;";
 
         public SqlConnection ConectarBanco()
@@ -18,7 +17,6 @@ namespace POnTheFly2
             conexao.Open();
             return conexao;
         }
-
 
         //Metodos feitos para fazer ações no banco de INSERT, SELECT, UPDATE. 
 
@@ -71,7 +69,6 @@ namespace POnTheFly2
                 }
             }
         }
-
 
         public void AtualizarPassageiro(SqlConnection sqlConnection, string cpf, int op)
         {
@@ -1400,7 +1397,7 @@ namespace POnTheFly2
                 cmd.Connection = sqlConnection;
                 cmd.ExecuteNonQuery();
 
-                Console.WriteLine("Edição efetuada com sucesso!");
+                Console.WriteLine("Reserva efetuada com sucesso!");
             }
 
             else if (op == 2)
@@ -1415,7 +1412,7 @@ namespace POnTheFly2
                 cmd.Connection = sqlConnection;
                 cmd.ExecuteNonQuery();
 
-                Console.WriteLine("Edição efetuada com sucesso!");
+                Console.WriteLine("Compra efetuada com sucesso!");
             }
         }
 
@@ -1440,6 +1437,18 @@ namespace POnTheFly2
                 }
             }
         }
+
+        public void AssentosOcupados(SqlConnection sqlConnection, string idPassagem)
+        {
+            SqlCommand cmd = new SqlCommand();
+
+            cmd.CommandText = "UPDATE Voo SET AssentosOcupados = AssentosOcupados + 1 WHERE IdVoo = (Select IdVoo from Passagem where IdPassagem = @IdPassagem);";
+            cmd.Parameters.AddWithValue("@IdPassagem", System.Data.SqlDbType.VarChar).Value = idPassagem;
+
+            cmd.Connection = sqlConnection;
+            cmd.ExecuteNonQuery();
+        }
+
         //Para item venda 
 
         public void InserirItemVenda(SqlConnection sqlConnection, int idVenda, float valorUnitario, string idPassagem)

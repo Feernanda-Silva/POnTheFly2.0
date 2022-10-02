@@ -83,7 +83,6 @@ namespace POnTheFly2
                 this.DataUltimaCompra, this.DataCadastro, this.Situacao, sqlConnection);
         }
 
-
         public void LocalizarPassageiro(ConexaoBanco conexaoBanco, SqlConnection sqlConnection)
         {
             Console.WriteLine("Digite o CPF: ");

@@ -61,6 +61,7 @@ namespace POnTheFly2
             }
 
             //Assentos Ocupados
+            conexaoBanco.AssentosOcupados(sqlConnection, idPassagem);
 
             Console.WriteLine("Escolha a opção desejada!");
             Console.WriteLine("1-Reservar passagem");
