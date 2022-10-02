@@ -346,7 +346,7 @@ namespace POnTheFly2
                             aeronave.EditarAeronave(conexaoBanco, sqlConnection);
                             break;
                         case 4:
-                            aeronave.ImprimirAeronave();
+                            aeronave.ImprimirAeronave(conexaoBanco, sqlConnection);
                             break;
                         case 5:
                             MenuInicial();

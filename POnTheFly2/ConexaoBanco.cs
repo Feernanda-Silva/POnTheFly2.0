@@ -21,6 +21,7 @@ namespace POnTheFly2
 
 
         //Metodos feitos para fazer ações no banco de INSERT, SELECT, UPDATE. 
+
         //Para Passageiro
         public void InserirPassageiro(string cpf, string nome, DateTime dataNascimento, char sexo,
             DateTime dataUltimaCompra, DateTime dataCadastro, char situacao, SqlConnection sqlConnection)
@@ -173,12 +174,12 @@ namespace POnTheFly2
 
         }
 
-        public void ImprimirPassageiro(SqlConnection sqlConnection,int pagina )
+        public void ImprimirPassageiro(SqlConnection sqlConnection, int pagina)
         {
             SqlCommand cmd = new SqlCommand();
             cmd.CommandText = "SELECT * FROM Passageiro ORDER BY Cpf OFFSET @Pagina ROWS FETCH NEXT 1 ROWS ONLY;";
             cmd.Parameters.AddWithValue("@Pagina", System.Data.SqlDbType.VarChar).Value = pagina;
-            
+
             cmd.Connection = sqlConnection;
             cmd.ExecuteNonQuery();
 
@@ -198,7 +199,7 @@ namespace POnTheFly2
             }
         }
 
-        public int ContagemPassageiros(SqlConnection sqlConnection)
+        public int ContarPassageiros(SqlConnection sqlConnection)
         {
 
             SqlCommand cmd = new SqlCommand();
@@ -212,7 +213,7 @@ namespace POnTheFly2
                 while (reader.Read())
                 {
                     countPassageiros = reader.GetInt32(0);
-                    
+
                 }
             }
 
@@ -887,6 +888,49 @@ namespace POnTheFly2
 
         }
 
+        public int ContarAeronave(SqlConnection sqlConnection)
+        {
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandText = "SELECT COUNT (*) FROM Aeronave";
+            cmd.Connection = sqlConnection;
+            cmd.ExecuteNonQuery();
+
+            int countAeronave = 0;
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    countAeronave = reader.GetInt32(0);
+
+                }
+            }
+
+            return countAeronave;
+        }
+
+        public void ImprimirAeronave(SqlConnection sqlConnection, int pagina)
+        {
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandText = "SELECT * FROM Aeronave ORDER BY Inscricao OFFSET @Pagina ROWS FETCH NEXT 1 ROWS ONLY;";
+            cmd.Parameters.AddWithValue("@Pagina", System.Data.SqlDbType.VarChar).Value = pagina;
+
+            cmd.Connection = sqlConnection;
+            cmd.ExecuteNonQuery();
+
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    Console.WriteLine("Inscricao: {0}", reader.GetString(0));
+                    Console.WriteLine("Capacidade: {0}", reader.GetInt32(1));
+                    Console.WriteLine("Ultima Venda: {0}", reader.GetDateTime(2));
+                    Console.WriteLine("Situação: {0}", reader.GetString(3));
+                    Console.WriteLine("Data Cadastro: {0}", reader.GetDateTime(4));
+                    Console.WriteLine("Cnpj: {0}", reader.GetString(5));
+                }
+            }
+        }
+
         public bool ExistirAeronave(SqlConnection sqlConnection, string inscricao)
         {
             SqlCommand cmd = new SqlCommand();
@@ -979,7 +1023,7 @@ namespace POnTheFly2
                 while (reader.Read())
                 {
                     valorPassagem = (float)reader.GetDouble(0);
-                
+
                 }
             }
 

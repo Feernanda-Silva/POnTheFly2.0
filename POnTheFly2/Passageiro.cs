@@ -151,7 +151,7 @@ namespace POnTheFly2
                     case 3:
                         pagina = pagina - 1;
                         break;
-                    case 4:  pagina = conexaoBanco.ContagemPassageiros(sqlConnection)-1;
+                    case 4:  pagina = conexaoBanco.ContarPassageiros(sqlConnection)-1;
                         break;
                 }
 
