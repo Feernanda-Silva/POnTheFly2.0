@@ -199,7 +199,7 @@ namespace POnTheFly2
             }
         }
 
-        public int ContarPassageiros(SqlConnection sqlConnection)
+        public int ContarPassageiro(SqlConnection sqlConnection)
         {
 
             SqlCommand cmd = new SqlCommand();
@@ -456,8 +456,8 @@ namespace POnTheFly2
 
 
         }
-        
-        public int ContarCia (SqlConnection sqlConnection)
+
+        public int ContarCia(SqlConnection sqlConnection)
         {
             SqlCommand cmd = new SqlCommand();
             cmd.CommandText = "SELECT COUNT (*) FROM CompanhiaAerea";
@@ -477,7 +477,7 @@ namespace POnTheFly2
             return countCia;
         }
 
-        public void ImprimirCia (SqlConnection sqlConnection, int pagina)
+        public void ImprimirCia(SqlConnection sqlConnection, int pagina)
         {
             SqlCommand cmd = new SqlCommand();
             cmd.CommandText = "SELECT * FROM CompanhiaAerea ORDER BY Cnpj OFFSET @Pagina ROWS FETCH NEXT 1 ROWS ONLY;";
@@ -499,6 +499,7 @@ namespace POnTheFly2
                 }
             }
         }
+
         //Para Companhia Aerea Bloqueadas
         public void InserirBloqueado(SqlConnection sqlConnection, string Cnpj)
         {
@@ -630,7 +631,6 @@ namespace POnTheFly2
             Console.WriteLine("Cadastro efetuado com sucesso!\n");
         }
 
-
         public void ConsultarVoo(SqlConnection sqlConnection, string idVoo)
         {
             SqlCommand cmd = new SqlCommand();
@@ -727,7 +727,6 @@ namespace POnTheFly2
 
 
         }
-
 
         public bool ExistirVoo(SqlConnection sqlConnection, string idVoo)
         {
@@ -1071,6 +1070,7 @@ namespace POnTheFly2
         {
             return 'F';
         }
+
         public void AtualizarPassagem(SqlConnection sqlConnection, string idPassagem, int op)
         {
             if (op == 1)
@@ -1148,6 +1148,49 @@ namespace POnTheFly2
 
         }
 
+        public int ContarPassagem(SqlConnection sqlConnection)
+        {
+
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandText = "SELECT COUNT (*) FROM Passagem";
+            cmd.Connection = sqlConnection;
+            cmd.ExecuteNonQuery();
+
+            int countPassagem = 0;
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    countPassagem = reader.GetInt32(0);
+
+                }
+            }
+
+            return countPassagem;
+        }
+
+        public void ImprimirPassagem(SqlConnection sqlConnection, int pagina)
+        {
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandText = "SELECT * FROM Passagem ORDER BY IdPassagem OFFSET @Pagina ROWS FETCH NEXT 1 ROWS ONLY;";
+            cmd.Parameters.AddWithValue("@Pagina", System.Data.SqlDbType.VarChar).Value = pagina;
+
+            cmd.Connection = sqlConnection;
+            cmd.ExecuteNonQuery();
+
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    Console.WriteLine("IdPassagem: {0}", reader.GetString(0));
+                    Console.WriteLine("Situação: {0}", reader.GetString(1));
+                    Console.WriteLine("Valor: {0}", reader.GetDouble(2));
+                    Console.WriteLine("Data Ultima Operação: {0}", reader.GetDateTime(3));
+                    Console.WriteLine("IdVoo: {0}", reader.GetString(4));
+
+                }
+            }
+        }
         public bool ExistirPassagem(SqlConnection sqlConnection, string idPassagem)
         {
             SqlCommand cmd = new SqlCommand();

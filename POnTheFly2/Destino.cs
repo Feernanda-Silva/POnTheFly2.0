@@ -25,9 +25,5 @@ namespace POnTheFly2
 
         }
 
-        public void LocalizarDestino(SqlConnection sqlConnection, ConexaoBanco conexaoBanco)
-        {
-
-        }
     }
 }

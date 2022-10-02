@@ -26,7 +26,7 @@ namespace POnTheFly2
                 numero = int.Parse(Console.ReadLine());
             }
 
-            this.IdPassagem = "PA"+ numero;
+            this.IdPassagem = "PA" + numero;
 
             while (conexaoBanco.ExistirPassagem(sqlConnection, this.IdPassagem) == true)
             {
@@ -50,7 +50,7 @@ namespace POnTheFly2
             Console.WriteLine("Valor: ");
             this.Valor = float.Parse(Console.ReadLine());
 
-            while(this.Valor > 10000)
+            while (this.Valor > 10000)
             {
                 Console.WriteLine("Digite um valor válido (Valores até 9.999,99");
                 Console.WriteLine("Valor: ");
@@ -64,9 +64,8 @@ namespace POnTheFly2
             this.DataUltimaOp = DateTime.Now;
 
             conexaoBanco.InserirPassagem(sqlConnection, this.IdPassagem, this.Situacao,
-                this.Valor, this.DataUltimaOp, this.IdVoo); 
+                this.Valor, this.DataUltimaOp, this.IdVoo);
         }
-
 
         public void LocalizarPassagem(SqlConnection sqlConnection, ConexaoBanco conexaoBanco)
         {
@@ -108,9 +107,40 @@ namespace POnTheFly2
             }
         }
 
-        public void ImprimirPassagem()
+        public void ImprimirPassagem(SqlConnection sqlConnection, ConexaoBanco conexaoBanco)
         {
+            int opc;
+            int pagina = 0;
 
+            do
+            {
+
+                Console.WriteLine("1-Primeiro");
+                Console.WriteLine("2-Próximo");
+                Console.WriteLine("3-Anterior");
+                Console.WriteLine("4-Ultimo");
+                opc = int.Parse(Console.ReadLine());
+
+                switch (opc)
+                {
+                    case 1:
+                        pagina = 0; //por posição
+                        break;
+                    case 2:
+                        pagina = pagina + 1;
+                        break;
+                    case 3:
+                        pagina = pagina - 1;
+                        break;
+                    case 4:
+                        pagina = conexaoBanco.ContarPassagem(sqlConnection) - 1;
+                        break;
+                }
+
+                conexaoBanco.ImprimirPassagem(sqlConnection, pagina);
+
+            } while (opc > 0 && opc < 5);
         }
     }
+
 }

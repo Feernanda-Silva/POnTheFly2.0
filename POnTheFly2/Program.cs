@@ -295,9 +295,8 @@ namespace POnTheFly2
                     Console.WriteLine("--- Menu Destino ---");
                     Console.WriteLine("Digite a opção desejada: ");
                     Console.WriteLine("1-Cadastrar");
-                    Console.WriteLine("2-Localizar");
-                    Console.WriteLine("3-Menu Voo");
-                    Console.WriteLine("4-Menu Inicial");
+                    Console.WriteLine("2-Menu Voo");
+                    Console.WriteLine("3-Menu Inicial");
 
                     opDestino = int.Parse(Console.ReadLine());
 
@@ -307,18 +306,16 @@ namespace POnTheFly2
                             destino.CadastrarDestino(sqlConnection, conexaoBanco);
                             break;
                         case 2:
-                            destino.LocalizarDestino(sqlConnection, conexaoBanco);
-                            break;
-                        case 3:
                             MenuVoo();
                             break;
-                        case 4:
+                        case 3:
                             MenuInicial();
                             break;
                     }
 
                 } while (opDestino > 0 && opDestino < 5);
             }
+
             void MenuAeronave()
             {
                 int opAeronave;
@@ -384,7 +381,7 @@ namespace POnTheFly2
                             passagem.EditarPassagem(sqlConnection, conexaoBanco);
                             break;
                         case 4:
-                            passagem.ImprimirPassagem();
+                            passagem.ImprimirPassagem(sqlConnection, conexaoBanco);
                             break;
                         case 5:
                             MenuInicial();
